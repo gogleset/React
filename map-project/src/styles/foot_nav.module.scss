@@ -1,0 +1,30 @@
+.container{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: rgb(138, 73, 73);
+}
+
+.list_wrapper{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.list_wrapper li {
+    height: auto;
+    border: 1px solid #000;
+    background-color: rgb(161, 139, 139);
+    line-height: 60px;
+}
+.list_wrapper li:first-child {
+    flex-grow: 1;
+}
+.list_wrapper li:nth-child(2) {
+    flex-grow: 1;
+}
+.list_wrapper li:nth-child(3) {
+    flex-grow: 1;
+}
