@@ -1,6 +1,6 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { createLogger } from 'redux-logger';
-import geoLocationReducer from './Reducer/geoLocationSlice';
+import geoLocationReducer from './Reducer/geoLocationSlice.js';
 
 // Slice 오브젝트 참조 구문 명시 위치
 const logger = createLogger();

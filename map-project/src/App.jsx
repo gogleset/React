@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Routes } from "react-router-dom";
 
-import { changeValue } from "./Data/Store/Reducer/geoLocationSlice";
-import { getCurrentLocation } from './Helper/getGeoLocation';
+import { changeValue } from "./Data/Store/Reducer/geoLocationSlice.js";
+import { getCurrentLocation } from './Helper/getGeoLocation.js';
 
 import "./styles/App.scss";
 import "./styles/home.module.scss";

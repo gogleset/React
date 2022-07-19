@@ -1,6 +1,5 @@
-/*** userSlice.js ***/
 import { createSlice } from "@reduxjs/toolkit";
-import { getCurrentLocation } from '../../../Helper/getGeoLocation';
+import { getCurrentLocation } from '../../../Helper/getGeoLocation.js';
 
 const initialState = {
     err: null,

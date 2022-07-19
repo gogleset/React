@@ -6,11 +6,15 @@ import KakaoMap from '../components/KakaoMap';
 
 const home = () => {
     return (
-        <div className={styles.container}>
-            <article className={styles.article_container}>
+        <article className={styles.article_container}>
+            <div className={styles.map_wrapper}>
                 <KakaoMap />
-            </article>
-        </div>
+            </div>
+
+            <div className={styles.weather_wrapper}>
+                
+            </div>
+        </article>
     );
 };
 
