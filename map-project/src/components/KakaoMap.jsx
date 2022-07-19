@@ -12,6 +12,7 @@ const KakaoMap = () => {
 
         <div>
             {err === 0 ? <Map
+            //위도 경도
                 center={{ lat: latitude, lng: longitude }}
                 style={{ width: "100%", height: "300px" }}
             >

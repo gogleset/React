@@ -13,12 +13,10 @@ const geoLocationSlice = createSlice({
     initialState, //해당 모듈의 초기값 세팅
     reducers: { // 해당 리듀서의 키 값으로 액션함수가 자동으로 생성
         changeValue(state, action) {
-            console.log(action.payload);
             state.err = action.payload.err;
             state.time = action.payload.time;
             state.latitude = action.payload.latitude;
             state.longitude = action.payload.longitude;
-            console.log(state);
         },
     }
 });

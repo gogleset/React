@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 export default {
-    getday: () => {
+    getDay: () => {
         let now = dayjs();
         now.format("YYYYMMDD");
         let year = now.get("y");
@@ -20,4 +20,15 @@ export default {
         console.log(`getDay Function ${year}${month}${day}`);
         return `${year}${month}${day}`;
     },
+    getHour: () => {
+        let now = dayjs();
+        now.format();
+        return `${now.$H}00`
+    },
+    getMinute: () => {
+        let now = dayjs();
+        now.format();
+        console.log(`${now.$m}`);
+        return `${now.$m}`;
+    }
 }
