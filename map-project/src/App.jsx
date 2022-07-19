@@ -32,7 +32,8 @@ function App() {
     if (err === 0) {
       let nx = parseInt(latitude);
       let ny = parseInt(longitude);
-      GetWeatherAPI.getLiveSitualtion(nx, ny)
+      GetWeatherAPI.getLiveSitualtion(nx, ny);
+      GetWeatherAPI.getLiveForecast(nx, ny);
     }
   }, [err])
 

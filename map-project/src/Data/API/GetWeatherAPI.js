@@ -12,7 +12,20 @@ export default {
             });
             console.log(data);
         } catch (err) {
-
+            console.log(err);
+        }
+    },
+    getLiveForecast: async (nx, ny) => {
+        console.log(`nx::: ${nx} ny:::  ${ny} `);
+        try {
+            const data = await axios.get('/api/weather/liveForecast', {
+                params: {
+                    nx: nx, ny: ny
+                }
+            });
+            console.log(data);
+        } catch (err) {
+            console.log(err);
         }
     },
 }

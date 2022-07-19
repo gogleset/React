@@ -23,7 +23,7 @@ export default {
     getHour: () => {
         let now = dayjs();
         now.format();
-        return `${now.$H}00`
+        return `${now.$H}`
     },
     getMinute: () => {
         let now = dayjs();
