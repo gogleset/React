@@ -5,6 +5,7 @@ const initialState = {
     time: null,
     latitude: null,
     longitude: null,
+    local: null,
 };
 
 const geoLocationSlice = createSlice({
@@ -17,9 +18,12 @@ const geoLocationSlice = createSlice({
             state.latitude = action.payload.latitude;
             state.longitude = action.payload.longitude;
         },
+        changeLocalValue(state, action){
+            state.local = action.payload.data;
+        }
     }
 });
 
-export const { changeLocationValue } = geoLocationSlice.actions;
+export const { changeLocationValue, changeLocalValue } = geoLocationSlice.actions;
 
 export default geoLocationSlice.reducer;

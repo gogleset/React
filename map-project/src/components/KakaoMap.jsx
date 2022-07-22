@@ -1,24 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import Loding from "../components/Loading";
 
 const KakaoMap = () => {
-    const dispatch = useDispatch();
     // stores data
-    const { err, time, latitude, longitude } = useSelector((state) => state.geoLocation);
-    const { data, status } = useSelector((state) => state.liveForcast);
-
-
-
-    useEffect(() => {
-        if (status === 200) {
-            console.log(data)
-        }
-        console.log(status)
-    }, [status])
-
+    const { err, latitude, longitude } = useSelector((state) => state.geoLocation);
     return (
         <div>
             {err === 0 ? <Map

@@ -1,6 +1,6 @@
 import express from 'express';
 import axios from "axios";
-import config from "./config.js";
+import config from "./src/config.js";
 import Day from "./src/Helper/DayHelper.js";
 const app = express();
 const today = Day.getDay(); //현재 날짜
@@ -35,7 +35,6 @@ app.get('/api/weather/:id', async (req, res) => {
             } else if (Number(forecastMinutes) > 60 && Number(forecastMinutes) > 30) {
                 forecastMinutes = "30";
             }
-
             try {
                 const { data } = await axios.get(`${config.weatherUrl}${config.liveForcast}ServiceKey=${config.keys.weatherEncodingKey}&pageNo=1&numOfRows=60&dataType=JSON&base_date=${today}&base_time=${hour}${forecastMinutes}&nx=${nx}&ny=${ny}`)
                 console.log(data);
@@ -52,8 +51,10 @@ app.get('/api/weather/:id', async (req, res) => {
                     err: -1,
                 });
             }
+            // eslint-disable-next-line no-unreachable
             break;
-
+        default:
+             break;
     }
 
 })
