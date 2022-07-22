@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getCurrentLocation } from '../../../Helper/getGeoLocation.js';
 
 const initialState = {
     err: null,
@@ -12,7 +11,7 @@ const geoLocationSlice = createSlice({
     name: 'geoLocation', //해당 모듈의 이름을 작성
     initialState, //해당 모듈의 초기값 세팅
     reducers: { // 해당 리듀서의 키 값으로 액션함수가 자동으로 생성
-        changeValue(state, action) {
+        changeLocationValue(state, action) {
             state.err = action.payload.err;
             state.time = action.payload.time;
             state.latitude = action.payload.latitude;
@@ -21,6 +20,6 @@ const geoLocationSlice = createSlice({
     }
 });
 
-export const { changeValue } = geoLocationSlice.actions;
+export const { changeLocationValue } = geoLocationSlice.actions;
 
 export default geoLocationSlice.reducer;

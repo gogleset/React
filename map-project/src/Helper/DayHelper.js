@@ -16,19 +16,21 @@ export default {
         if (String(day).length === 1) {
             day = "0" + day;
         }
-
-        console.log(`getDay Function ${year}${month}${day}`);
         return `${year}${month}${day}`;
     },
     getHour: () => {
         let now = dayjs();
         now.format();
-        return `${now.$H}`
+        let hour = String(now.$H - 1);
+        if (hour.length === 1) {
+            hour = "0" + hour;
+        }
+
+        return `${hour}`
     },
     getMinute: () => {
         let now = dayjs();
         now.format();
-        console.log(`${now.$m}`);
         return `${now.$m}`;
     }
 }
