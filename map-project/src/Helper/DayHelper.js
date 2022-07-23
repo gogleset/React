@@ -1,7 +1,9 @@
 import dayjs from 'dayjs';
+import "dayjs/locale/ko.js";
+dayjs.locale("ko")
 
-export default {
-    getDay: () => {
+export default class date {
+    getDay() {
         let now = dayjs();
         now.format("YYYYMMDD");
         let year = now.get("y");
@@ -17,18 +19,48 @@ export default {
             day = "0" + day;
         }
         return `${year}${month}${day}`;
-    },
-    getHour: () => {
+    }
+    // 요일데이터 출력
+    getYoil(){
+        let now = dayjs().get('day');
+        switch (now){
+            case 0:
+                now = "일"
+                break;
+            case 1:
+                now = "월"
+                break;
+            case 2:
+                now = "화"
+                break;
+            case 3:
+                now = "수"
+                break;
+            case 4:
+                now = "목"
+                break;
+                case 5:
+                now = "금"
+                break;
+                case 6:
+                now = "토"
+                break;
+            default: 
+            now = "날짜 데이터 조회 실패"
+                break;
+        }
+        return now;
+    }
+    getHour() {
         let now = dayjs();
         now.format();
         let hour = String(now.$H - 1);
         if (hour.length === 1) {
             hour = "0" + hour;
         }
-
         return `${hour}`
-    },
-    getMinute: () => {
+    }
+    getMinute(){
         let now = dayjs();
         now.format();
         return `${now.$m}`;

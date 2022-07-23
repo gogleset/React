@@ -12,7 +12,7 @@ const KakaoMap = () => {
             {err === 0 ? <Map
                 //위도 경도
                 center={{ lat: latitude, lng: longitude }}
-                style={{ width: "120px", height: "120px", border: "1px solid black", borderRadius: "50%" }}
+                style={{ width: "135px", height: "135px", border: "1px solid rgb(207, 207, 207", borderRadius: "50%", marginTop: "20px", boxShadow: "0px 0px 13px rgb(207, 207, 207)"}}
                 level={6}
             >
                 <MapMarker position={{ lat: latitude, lng: longitude }}>

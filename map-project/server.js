@@ -1,8 +1,9 @@
 import express from 'express';
 import axios from "axios";
 import config from "./src/config.js";
-import Day from "./src/Helper/DayHelper.js";
+import DayHelper from "./src/Helper/DayHelper.js";
 const app = express();
+const Day = new DayHelper();
 const today = Day.getDay(); //현재 날짜
 const hour = Day.getHour(); //현재 시간
 const minute = Day.getMinute(); //현재 

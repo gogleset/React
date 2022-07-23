@@ -3,7 +3,7 @@ import styles from '../styles/footer.module.scss';
 const footer = () => {
     return (
         <footer className={styles.container}>
-            <span>Copyright &copy; gogleset</span>
+            <span>Copyright &copy; gogleset / 기상청 동네예보</span>
         </footer>
     );
 };
