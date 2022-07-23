@@ -1,4 +1,6 @@
 // 각종 키, 설정 모음입니다.
+
+/* eslint import/no-anonymous-default-export: [2, {"allowObject": true}] */
 export default { 
     server: {
         port: 4000,
@@ -9,8 +11,8 @@ export default {
         kakaoRestKey: "e81fe8a8b57c8498edf0dc7040da1a84"
     },
     weatherUrl:"http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0",
+    weatherUrls:"/1360000/VilageFcstInfoService_2.0",
     liveSituation: "/getUltraSrtNcst?",
     liveForcast:"/getUltraSrtFcst?",
     ShortForcast : "/getVilageFcst?",
-
 }
