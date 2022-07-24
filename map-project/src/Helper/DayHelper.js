@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import "dayjs/locale/ko.js";
 dayjs.locale("ko")
+const today = new Date();
 
 export default class date {
     getDay() {
@@ -51,7 +52,8 @@ export default class date {
         }
         return now;
     }
-    getHour() {
+    //서버로 요청하는 시간
+    getServerHour() {
         let now = dayjs();
         now.format();
         let hour = String(now.$H - 1);
@@ -64,5 +66,15 @@ export default class date {
         let now = dayjs();
         now.format();
         return `${now.$m}`;
+    }
+    //24시간형식
+    get24Hour(){
+        const hour = ('0' + today.getHours()).slice(-2);
+        return hour;
+    }
+    // 00형식
+    getMin() {
+        const min = ('0' + today.getMinutes()).slice(-2);
+        return min;
     }
 }

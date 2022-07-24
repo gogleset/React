@@ -1,24 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
+//styles
 import styles from '../styles/home.module.scss';
+
+//components
 import KakaoMap from '../components/KakaoMap';
 import WeatherImage from '../components/Home/WeatherImage';
+import TodayWeatherGraph from '../components/Home/TodayWeatherGraph';
+
+// data
 import DayHelper from "../Helper/DayHelper.js";
 const Day = new DayHelper();
-const today = new Date();
 
 const Home = () => {
     const yoil = Day.getYoil();
-    const hour = ('0' + today.getHours()).slice(-2);
-    const min = ('0' + today.getSeconds()).slice(-2);
+    const hour = Day.get24Hour();
+    const min = Day.getMin()
+
     // states
     const { local } = useSelector((state) => state.geoLocation);
     const { data } = useSelector((state) => state.liveForcast);
 
     // 기온, 습도, 하늘상황(날씨), api데이터
     const [temperature, setTemperature] = useState({}); const [humidity, setHumidity] = useState({});
-    const [weather, setWeather] = useState({});
+    const [sky, setSky] = useState({});
+    const [precipitation, setPrecipitation] = useState({});
+    const [times, setTimes] = useState([]);
 
 
     useEffect(() => {
@@ -36,14 +44,30 @@ const Home = () => {
                         data.filter(item => item.category === "REH")
                 }
             });
-            setWeather((prevState) => {
+            setPrecipitation((prevState) => {
                 return {
                     ...prevState, data:
                         data.filter(item => item.category === "PTY")
                 }
             });
+            setSky((prevState) => {
+                return {
+                    ...prevState, data:
+                        data.filter(item => item.category === "SKY")
+                }
+            });
         }
     }, [data]);
+
+    // 날씨 api받아오면 시간 추출
+    useEffect(() => {
+        if (temperature.data) {
+            let ti = temperature.data.map(item => item.fcstTime.slice(0, 2) +
+                ":" + item.fcstTime.slice(2))
+            console.log(ti)
+            setTimes(ti);
+        }
+    }, [temperature]);
 
     return (
         <article className={styles.article_container}>
@@ -55,7 +79,7 @@ const Home = () => {
                             {temperature.data[0].fcstValue}&deg;
                         </span>}
                         {/* 이미지 추가 */}
-                        {weather.data && <WeatherImage data={weather.data[0]} />}
+                        {precipitation.data && <WeatherImage data={{ precipitation: precipitation.data[0].fcstValue, sky: sky.data[0].fcstValue }} />}
                     </div>
 
                     {/* 현재 위치(동) */}
@@ -74,7 +98,22 @@ const Home = () => {
                 <KakaoMap />
             </div>
 
+
             <div className={styles.weather_wrapper}>
+                {/* 초단기 예보 */}
+                <div className={styles.weather_title}>
+                    <h1>기온 및 날씨</h1>
+                    {times && <span>
+                        ({times[0]}~{times[5]})
+                    </span>}
+                </div>
+
+                {temperature.data && <TodayWeatherGraph data={{ temperature: temperature.data, humidity: humidity.data, precipitation: precipitation.data, time: times }} />}
+
+                <div className={styles.weather_title}>
+                    <h1>속보·특보</h1>
+                    
+                </div>
 
             </div>
         </article>
