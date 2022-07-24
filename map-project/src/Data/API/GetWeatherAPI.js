@@ -32,9 +32,10 @@ export default {
             console.log('/api' + `${config.weatherUrls}${config.liveForcast}ServiceKey=${config.keys.weatherEncodingKey}&pageNo=1&numOfRows=60&dataType=JSON&base_date=${today}&base_time=${hour}${forecastMinutes}&nx=${nx}&ny=${ny}`)
             const data = await axios.get('/api' + `${config.weatherUrls}${config.liveForcast}ServiceKey=${config.keys.weatherEncodingKey}&pageNo=1&numOfRows=60&dataType=JSON&base_date=${today}&base_time=${hour}${forecastMinutes}&nx=${nx}&ny=${ny}`);
             console.log("try");
+            console.log(data);
             return { data: data };
         } catch (err) {
-            return err;
+            throw new Error(err);
         }
     },
 }

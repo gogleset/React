@@ -52,7 +52,7 @@ const Home = () => {
                     {/* 현재 기온 */}
                     <div style={{ display: 'flex' }}>
                         {temperature.data && <span className={styles.current_position_temperature}>
-                            {temperature.data[0].fcstValue}&deg;C
+                            {temperature.data[0].fcstValue}&deg;
                         </span>}
                         {/* 이미지 추가 */}
                         {weather.data && <WeatherImage data={weather.data[0]} />}

@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 
 // data, apis
@@ -36,9 +36,11 @@ function App() {
       let ny = parseInt(longitude);
       // GetWeatherAPI.getLiveSitualtion(nx, ny);
       GetWeatherAPI.getLiveForecast(nx, ny).then((res) => {
-        dispatch(changeForecastValue({ data: res.data.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
+        console.log("try");
+        console.log(res)
+        dispatch(changeForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
       }).catch((rej) => {
-        console.log(rej)
+        console.log("catch")
         dispatch(changeForecastValue({ data: null, status: 400, err: "NO" }));
       });
       // 주소값 구하기
