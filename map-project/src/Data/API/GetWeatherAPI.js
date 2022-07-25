@@ -1,18 +1,21 @@
 import axios from "axios";
 import config from "../../config.js";
 import DayHelper from "../../Helper/DayHelper.js";
+import dayjs from "dayjs"
 const Day = new DayHelper();
 const today = Day.getDay(); //현재 날짜
-const hour = Day.getServerHour(); //현재 시간
+const serverHour = Day.getServerHour(); //현재 시간
 const minute = Day.getMinute(); //현재 
 const todayForecastTime = Day.getTodayForecastTime();
+console.log((Number(serverHour) + 1) === 24 || 1 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today)
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
+    
     // 오늘데이터를 가져옵니다.
     getTodayForcast: async (nx, ny) => {
         try {
-            const data = await axios.get('/api' + `${config.weatherUrls}${config.TodayForcast}ServiceKey=${config.keys.weatherEncodingKey}&pageNo=1&numOfRows=144&dataType=JSON&base_date=${today}&base_time=${todayForecastTime}&nx=${nx}&ny=${ny}`);
+            const data = await axios.get('/api' + `${config.weatherUrls}${config.TodayForcast}ServiceKey=${config.keys.weatherEncodingKey}&pageNo=1&numOfRows=144&dataType=JSON&base_date=${(Number(serverHour) + 1) === 24 || 1 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${todayForecastTime}&nx=${nx}&ny=${ny}`);
             console.log(data);
             return { data: data };
         } catch (err) {
@@ -28,7 +31,7 @@ export default {
             forecastMinutes = "30";
         }
         try {
-            const data = await axios.get('/api' + `${config.weatherUrls}${config.liveForcast}ServiceKey=${config.keys.weatherEncodingKey}&pageNo=1&numOfRows=60&dataType=JSON&base_date=${today}&base_time=${hour}${forecastMinutes}&nx=${nx}&ny=${ny}`);
+            const data = await axios.get('/api' + `${config.weatherUrls}${config.liveForcast}ServiceKey=${config.keys.weatherEncodingKey}&pageNo=1&numOfRows=60&dataType=JSON&base_date=${today}&base_time=${serverHour}${forecastMinutes}&nx=${nx}&ny=${ny}`);
             console.log("try");
             console.log(data);
             return { data: data };

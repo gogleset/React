@@ -38,7 +38,7 @@ const Home = () => {
                             {temperature[0].fcstValue}&deg;
                         </span>}
                         {/* 이미지 추가 */}
-                        {precipitation && <WeatherImage data={{ precipitation: precipitation[0].fcstValue, sky: sky[0].fcstValue }} />}
+                        {precipitation && <WeatherImage data={{ precipitation: precipitation[0].fcstValue, sky: sky[0].fcstValue, time: time[0] }} />}
                     </div>
                     {/* 현재 위치(동) */}
                     {local && <div>
@@ -79,7 +79,7 @@ const Home = () => {
                             return (
                                 <div className={styles.weather_today_graph_article_box}>
                                     <span>{todayTemperature[index].fcstValue}&deg;</span>
-                                    <WeatherImage data={{ precipitation: item.fcstValue, sky: todaySky[index].fcstValue }} width={25} height={25} />
+                                    <WeatherImage data={{ precipitation: item.fcstValue, sky: todaySky[index].fcstValue, time: todayTime[index].slice(0, 2) }} width={25} height={25} />
                                 </div>
                             )
                         })}

@@ -60,6 +60,9 @@ export default class date {
         if (hour.length === 1) {
             hour = "0" + hour;
         }
+        if(hour === "-1") {
+            hour = 23;
+        }
         return `${hour}`
     };
     getMinute() {
@@ -94,4 +97,15 @@ export default class date {
                                 (time > 530) ? "0500" :
                                     (time > 230) ? "0200" : "2300"
     };
+    // 밤 낮 구분
+    getEvent(hour) {
+        let numHour = parseInt(hour);
+        if (numHour > 19) {
+            return "night"
+        } else if (numHour >= 7) {
+            return "morning"
+        } else {
+            return "night"
+        }
+    }
 }

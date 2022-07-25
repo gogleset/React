@@ -9,29 +9,30 @@ import DayHelper from "../../Helper/DayHelper.js";
 
 const WeatherImage = ({ data, width, height }) => {
 
-    const { sky, precipitation } = data;
+    const { sky, precipitation, time } = data;
 
 
     useEffect(() => {
-        console.log(sky, precipitation);
+        // console.log(sky, precipitation, time);
     }, [sky])
 
     return (
         <div>
-            {data && printClassificationWeather(sky, precipitation, width, height)}
+            {data && printClassificationWeather(sky, precipitation, parseInt(time), width, height)}
         </div>
     );
 };
 // 값을 분류하여 Image리턴
-function printClassificationWeather(sky, precipitation, width, height) {
+function printClassificationWeather(sky, precipitation, time, width, height) {
     const Day = new DayHelper();
-    const hour = parseInt(Day.get24Hour());
+    let times = parseInt(time);
+    const hour = Day.getEvent(times);
     const skyCode = parseInt(sky);
     const precipitationCode = parseInt(precipitation);
     console.log(`printClassificationWeather hour ::: ${hour} ${skyCode} ${precipitationCode}`)
     // 날씨 맑음일때는 sky값으로 출력
-    if (skyCode === 1 && hour < 19) {
-        console.log("sky === 1 hour < 19")
+    if (skyCode === 1 && hour === "morning") {
+        console.log("skyCode === 1 && hour === morning")
         switch (skyCode) {
             case 1:
                 return (<img src={sunImage} alt="날씨 맑음" width={width} height={height} />);
@@ -43,8 +44,8 @@ function printClassificationWeather(sky, precipitation, width, height) {
                 alert('날씨 값이 들어오지 않았습니다.')
                 break;
         }
-    } else if (skyCode !== 1 && hour < 19) {
-        console.log("skyCode !== 1 hour < 19")
+    } else if (skyCode !== 1 && hour === "morning") {
+        console.log("skyCode !== 1 hour === morning")
         switch (precipitationCode) {
             case 0:
                 return (<img src={sunImage} alt="날씨 맑음" width={width} height={height} />);
@@ -64,8 +65,8 @@ function printClassificationWeather(sky, precipitation, width, height) {
                 return;
         }
         // 저녁일때
-    } else if (skyCode === 1 && hour >= 19) {
-        console.log("skyCode === 1 hour >= 19");
+    } else if (skyCode === 1 && hour === "night") {
+        console.log("skyCode === 1 hour === night");
         switch (skyCode) {
             case 1:
                 return (<img src={nightImage} alt="밤 날씨 맑음" width={width} height={height} />);
@@ -77,8 +78,8 @@ function printClassificationWeather(sky, precipitation, width, height) {
                 alert('날씨 값이 들어오지 않았습니다.')
                 break;
         }
-    } else if (skyCode !== 1 && hour >= 19) {
-        console.log("skyCode !== 1 && hour >= 19");
+    } else if (skyCode !== 1 && hour === "night") {
+        console.log("skyCode !== 1 && hour === night");
         switch (precipitationCode) {
             case 0:
                 return (<img src={nightImage} alt="밤 날씨 맑음" width={width} height={height} />);
@@ -99,6 +100,7 @@ function printClassificationWeather(sky, precipitation, width, height) {
         }
     }
 }
+
 
 WeatherImage.defaultProps = {
     width: "50",
