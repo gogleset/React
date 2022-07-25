@@ -17,5 +17,5 @@ export default {
     
     liveSituation: "/getUltraSrtNcst?",
     liveForcast:"/getUltraSrtFcst?",
-    ShortForcast : "/getVilageFcst?",
+    TodayForcast : "/getVilageFcst?",
 }

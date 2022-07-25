@@ -20,11 +20,11 @@ export default class date {
             day = "0" + day;
         }
         return `${year}${month}${day}`;
-    }
+    };
     // 요일데이터 출력
-    getYoil(){
+    getYoil() {
         let now = dayjs().get('day');
-        switch (now){
+        switch (now) {
             case 0:
                 now = "일"
                 break;
@@ -40,18 +40,18 @@ export default class date {
             case 4:
                 now = "목"
                 break;
-                case 5:
+            case 5:
                 now = "금"
                 break;
-                case 6:
+            case 6:
                 now = "토"
                 break;
-            default: 
-            now = "날짜 데이터 조회 실패"
+            default:
+                now = "날짜 데이터 조회 실패"
                 break;
         }
         return now;
-    }
+    };
     //서버로 요청하는 시간
     getServerHour() {
         let now = dayjs();
@@ -61,20 +61,37 @@ export default class date {
             hour = "0" + hour;
         }
         return `${hour}`
-    }
-    getMinute(){
+    };
+    getMinute() {
         let now = dayjs();
         now.format();
         return `${now.$m}`;
-    }
+    };
     //24시간형식
-    get24Hour(){
+    get24Hour() {
         const hour = ('0' + today.getHours()).slice(-2);
         return hour;
-    }
+    };
     // 00형식
     getMin() {
         const min = ('0' + today.getMinutes()).slice(-2);
         return min;
-    }
+    };
+    getTodayForecastTime() {
+        const hour = today.getHours();
+        let minute = today.getMinutes();
+        if (minute < 10) {
+            minute = `0${minute}`;
+        }
+        const time = parseInt(`${hour}${minute}`)
+        console.log(time);
+        return (time > 2330) ? "2300" :
+            (time > 2030) ? "2000" :
+                (time > 1730) ? "1700" :
+                    (time > 1430) ? "1400" :
+                        (time > 1130) ? "1100" :
+                            (time > 830) ? "0800" :
+                                (time > 530) ? "0500" :
+                                    (time > 230) ? "0200" : "2300"
+    };
 }
