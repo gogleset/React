@@ -73,3 +73,54 @@
     margin-top: 30px;
     margin-bottom: 10px;
 }
+
+.weather_today_graph_wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 350px;
+    height: 160px;
+    padding: 15px 0px 0px 20px;
+    overflow-x: auto;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgb(228, 228, 228);
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+// 그래프안 정보를 보여주는 곳을 감싸는 박스
+.weather_today_graph_article_wrapper {
+    display: flex;
+    width: 540px;
+    margin-left: -18px;
+    height: 50px;
+}
+
+.weather_today_graph_article_box {
+    display: flex;
+    flex-direction: column;
+    width: 8.25%;
+    text-align: center;
+}
+
+
+.weather_today_graph_wrapper::-webkit-scrollbar {
+    height: 10px;
+    /* 스크롤바의 너비 */
+}
+
+.weather_today_graph_wrapper::-webkit-scrollbar-thumb {
+    width: 10px;
+    /* 스크롤바의 길이 */
+    background: rgb(155, 204, 236);
+    /* 스크롤바의 색상 */
+
+    border-radius: 10px;
+}
+
+// .weather_today_wrapper::-webkit-scrollbar-track {
+/*스크롤바 뒷 배경 색상*/
+// }

@@ -23,9 +23,9 @@ const Home = () => {
     const { local } = useSelector((state) => state.geoLocation);
     // 기온, 습도, 하늘상황(날씨), api데이터
     const { temperature, humidity, sky, precipitation, time } = useSelector((state) => state.liveForecast);
-    const { todayTemperature, todaySky, todayPrecipitation, todayTime, todayHumidity } = useSelector((state) => state.todayForecast);
+    const { todayTemperature, todaySky, todayPrecipitationForm, todayTime, todayHumidity } = useSelector((state) => state.todayForecast);
 
-    console.log(todayTemperature, todaySky, todayPrecipitation, todayTime)
+    console.log(todayTemperature, todaySky, todayPrecipitationForm, todayTime)
 
 
     return (
@@ -70,24 +70,51 @@ const Home = () => {
                         ({todayTime[0]}~{todayTime[11]})
                     </span>}
                 </div>
-
-                {todayTemperature && <TodayWeatherGraph data={{ temperature: todayTemperature, humidity: todayHumidity, precipitation: todayPrecipitation, time: todayTime }} />}
+                {/* 그래프 */}
+                {todayTemperature && <div className={styles.weather_today_graph_wrapper}>
+                    {/*  */}
+                    <div className={styles.weather_today_graph_article_wrapper}>
+                        {/* 하늘 상태로 반복 */}
+                        {todayPrecipitationForm.map((item, index) => {
+                            return (
+                                <div className={styles.weather_today_graph_article_box}>
+                                    <span>{todayTemperature[index].fcstValue}&deg;</span>
+                                    <WeatherImage data={{ precipitation: item.fcstValue, sky: todaySky[index].fcstValue }} width={25} height={25} />
+                                </div>
+                            )
+                        })}
+                    </div>
+                    {/* 그래프 */}
+                    <TodayWeatherGraph data={{ temperature: todayTemperature, humidity: todayHumidity, precipitation: todayPrecipitationForm, time: todayTime }} />
+                    {/*  */}
+                    <div className={styles.weather_today_graph_article_wrapper} style={{ height: "0px", marginLeft: "-15px" }}>
+                        {/* 시간 상태로 반복 */}
+                        {todayTime.map((item, index) => {
+                            return (
+                                <div className={styles.weather_today_graph_article_box} style={{ marginTop: "10px" }}>
+                                    <span style={{ textAlign: "center", fontSize: "13px" }}>{item}</span>
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
+                }
 
                 {/* 초단기 예보 */}
-                <div className={styles.weather_title}>
+                {/* <div className={styles.weather_title}>
                     <h1>기온 및 날씨</h1>
                     {time && <span>
                         ({time[0]}~{time[5]})-초단기 데이터
                     </span>}
-                </div>
+                </div> */}
 
-                {temperature && <TodayWeatherGraph data={{ temperature: temperature, humidity: humidity, precipitation: precipitation, time: time }} />}
+                {/* {temperature && <TodayWeatherGraph data={{ temperature: temperature, humidity: humidity, precipitation: precipitation, time: time }} />} */}
 
                 <div className={styles.weather_title}>
                     <h1>속보·특보</h1>
                 </div>
             </div>
-        </article>
+        </article >
     );
 };
 
