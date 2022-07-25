@@ -48,17 +48,6 @@ async function getAddress(latitude, longitude) {
     }
 }
 
-// (사용 예)
-// let rs = getDfsXyconv("toXY","nx","ny");
-// console.log(rs.lat, rs.lng);
-//
-// LCC DFS 좌표변환을 위한 기초 자료
-//
-
-
-
-
-//
 // LCC DFS 좌표변환 ( code : "toXY"(위경도->좌표, v1:위도, v2:경도), "toLL"(좌표->위경도,v1:x, v2:y) )
 //
 function dfs_xy_conv(code, v1, v2) {

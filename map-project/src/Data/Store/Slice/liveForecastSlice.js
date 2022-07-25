@@ -6,6 +6,7 @@ const initialState = {
     humidity: null, //습도
     sky: null, //하늘상태
     precipitation: null, //강수확률
+    time: null, // 시간
     status: null,
     err: null,
 };
@@ -23,6 +24,11 @@ const liveForcastSlice = createSlice({
                 state.humidity = action.payload.data.filter(item => item.category === "REH");
                 state.sky = action.payload.data.filter(item => item.category === "SKY");
                 state.precipitation = action.payload.data.filter(item => item.category === "PTY")
+                if (state.temperature) {
+                    state.time = null;
+                    state.time = state.temperature.map(item => item.fcstTime.slice(0, 2) +
+                        ":" + item.fcstTime.slice(2));
+                }
             }
         },
     }

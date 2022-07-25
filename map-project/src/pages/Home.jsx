@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 //styles
 import styles from '../styles/home.module.scss';
+import localImage from "../styles/images/icon_location.gif";
 
 //components
 import KakaoMap from '../components/KakaoMap';
@@ -21,20 +22,11 @@ const Home = () => {
     // states
     const { local } = useSelector((state) => state.geoLocation);
     // 기온, 습도, 하늘상황(날씨), api데이터
-    const { temperature, humidity, sky, precipitation } = useSelector((state) => state.liveForecast);
+    const { temperature, humidity, sky, precipitation, time } = useSelector((state) => state.liveForecast);
+    const { todayTemperature, todaySky, todayPrecipitation, todayTime, todayHumidity } = useSelector((state) => state.todayForecast);
 
+    console.log(todayTemperature, todaySky, todayPrecipitation, todayTime)
 
-    const [times, setTimes] = useState([]);
-
-    // 날씨 api받아오면 시간 추출
-    useEffect(() => {
-        if (temperature) {
-            let ti = temperature.map(item => item.fcstTime.slice(0, 2) +
-                ":" + item.fcstTime.slice(2))
-            console.log(ti)
-            setTimes(ti);
-        }
-    }, [temperature]);
 
     return (
         <article className={styles.article_container}>
@@ -48,11 +40,15 @@ const Home = () => {
                         {/* 이미지 추가 */}
                         {precipitation && <WeatherImage data={{ precipitation: precipitation[0].fcstValue, sky: sky[0].fcstValue }} />}
                     </div>
-
                     {/* 현재 위치(동) */}
-                    {local && <span className={styles.current_position_area}>
-                        {local.region_3depth_name}
-                    </span>}
+                    {local && <div>
+                        <span className={styles.current_position_area}>
+                            {local.region_3depth_name}
+                        </span>
+                        <img src={localImage} alt="장소" width={13} height={13} />
+                    </div>}
+
+
                     {/* 현재 습도 */}
                     {temperature && <span className={styles.current_position_humidity}>
                         습도:  {humidity[0].fcstValue}%
@@ -67,15 +63,25 @@ const Home = () => {
 
 
             <div className={styles.weather_wrapper}>
-                {/* 초단기 예보 */}
+                {/* 단기 예보 */}
                 <div className={styles.weather_title}>
                     <h1>기온 및 날씨</h1>
-                    {times && <span>
-                        ({times[0]}~{times[5]})
+                    {todayTime && <span>
+                        ({todayTime[0]}~{todayTime[11]})
                     </span>}
                 </div>
 
-                {temperature && <TodayWeatherGraph data={{ temperature: temperature, humidity: humidity, precipitation: precipitation, time: times }} />}
+                {todayTemperature && <TodayWeatherGraph data={{ temperature: todayTemperature, humidity: todayHumidity, precipitation: todayPrecipitation, time: todayTime }} />}
+
+                {/* 초단기 예보 */}
+                <div className={styles.weather_title}>
+                    <h1>기온 및 날씨</h1>
+                    {time && <span>
+                        ({time[0]}~{time[5]})-초단기 데이터
+                    </span>}
+                </div>
+
+                {temperature && <TodayWeatherGraph data={{ temperature: temperature, humidity: humidity, precipitation: precipitation, time: time }} />}
 
                 <div className={styles.weather_title}>
                     <h1>속보·특보</h1>
