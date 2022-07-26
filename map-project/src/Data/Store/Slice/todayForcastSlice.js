@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import DayHelper from "../../../Helper/DayHelper.js";
 
+const Day = new DayHelper();
+const today = Day.getDay();
 const initialState = {
     data: null,
     status: null,
@@ -12,7 +15,11 @@ const initialState = {
     todayPrecipitationForm: null,// 강수형태
     todaySnowfall: null, //강설량
     todayHumidity: null, //습도
-    todayTime:null, //시간
+    todayTime: null, //시간
+    nowTime: null, //현재시간~ 19시간후
+    nowTemperature: null, //
+    nowPrecipitationForm: null,
+    nowSky: null,
     err: null,
 };
 
@@ -25,6 +32,7 @@ const todayForecastSlice = createSlice({
             state.status = action.payload.status;
             state.err = action.payload.err;
             if (action.payload.data !== null) {
+                let now = `${Day.get24Hour()}00`;
                 state.todayTemperature = action.payload.data.filter(item => item.category === "TMP"); // 1시간 온도
                 state.todaySky = action.payload.data.filter(item => item.category === "SKY"); //하늘 상태
                 state.rowTemperatures = action.payload.data.filter(item => item.category === "TMN"); // 최저기온
@@ -39,6 +47,29 @@ const todayForecastSlice = createSlice({
                     state.todayTime = state.todayTemperature.map(item => item.fcstTime.slice(0, 2) +
                         ":" + item.fcstTime.slice(2));
                 }
+
+                console.log(now)
+                // temperature 객체 복사
+                let temperatureArr = [...state.todayTemperature];
+                // time 객체 복사
+                let timeArr = [...state.todayTime];
+                let precipitationFormArr = [...state.todayPrecipitationForm];
+                let skyArr = [...state.todaySky]
+                for (let i = 0; i < state.todayTemperature.length; i++) {
+                    // 오늘날짜 나오지 않는다면 짜름
+                    if (state.todayTemperature[i].fcstTime.indexOf(now) === 0) {
+                        break;
+                    }
+                    temperatureArr.shift()
+                    timeArr.shift()
+                    precipitationFormArr.shift()
+                    skyArr.shift()
+                }
+                // 19시간까지 데이터로 짜름
+                state.nowTemperature = temperatureArr.slice(0, 20).map((item => item.fcstValue));
+                state.nowTime = timeArr.slice(0, 20)
+                state.nowPrecipitationForm = precipitationFormArr.slice(0, 20).map((item => item.fcstValue));
+                state.nowSky = skyArr.slice(0, 20).map((item => item.fcstValue));
             }
         },
     }

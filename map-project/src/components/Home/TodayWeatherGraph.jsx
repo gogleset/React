@@ -3,8 +3,9 @@ import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 
 import styles from "../../styles/graph.module.scss";
+import DayHelper from "../../Helper/DayHelper.js"
 
-
+const Day = new DayHelper();
 
 const options = {
     // responsive 속성을 false로 지정한다.
@@ -16,17 +17,25 @@ const options = {
         }
     },
     scales: {
-        yAxis: {
+        y: {
             display: false, //안보이게하기
             ticks: {
                 stepSize: 1, //y축 숫자 소수점 제거
             }
         },
-        xAxes: {
-            display: false,
-            gridLines: {
+        x: {
+            pointStyle: 'cross',
+            grid: {
                 display: false
-            }
+            },
+            ticks: {
+                color: '#000000',
+                font: {
+                    size: 11,
+                    weight: "bold",
+                    family: "'Jua', sans-serif"
+                }
+            },
         },
 
     }
@@ -35,10 +44,8 @@ const options = {
 
 
 const TodayWeatherGraph = ({ data }) => {
-
-
     let { temperature, time } = data;
-    let temperatureValue = temperature.map((item => item.fcstValue));
+   
     const printDataOption = {
         labels: time,
         datasets: [
@@ -46,8 +53,9 @@ const TodayWeatherGraph = ({ data }) => {
                 type: 'line',
                 borderColor: 'rgb(54, 162, 235)',
                 borderWidth: 1,
-                data: temperatureValue,
-                tension: 0.3
+                data: temperature,
+                tension: 0.3,
+
             },
         ],
     };

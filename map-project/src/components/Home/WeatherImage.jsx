@@ -29,10 +29,10 @@ function printClassificationWeather(sky, precipitation, time, width, height) {
     const hour = Day.getEvent(times);
     const skyCode = parseInt(sky);
     const precipitationCode = parseInt(precipitation);
-    console.log(`printClassificationWeather hour ::: ${hour} ${skyCode} ${precipitationCode}`)
+    // console.log(`printClassificationWeather hour ::: ${hour} ${skyCode} ${precipitationCode}`)
     // 날씨 맑음일때는 sky값으로 출력
     if (skyCode === 1 && hour === "morning") {
-        console.log("skyCode === 1 && hour === morning")
+        // console.log("skyCode === 1 && hour === morning")
         switch (skyCode) {
             case 1:
                 return (<img src={sunImage} alt="날씨 맑음" width={width} height={height} />);
@@ -45,7 +45,7 @@ function printClassificationWeather(sky, precipitation, time, width, height) {
                 break;
         }
     } else if (skyCode !== 1 && hour === "morning") {
-        console.log("skyCode !== 1 hour === morning")
+        // console.log("skyCode !== 1 hour === morning")
         switch (precipitationCode) {
             case 0:
                 return (<img src={sunImage} alt="날씨 맑음" width={width} height={height} />);
@@ -66,7 +66,7 @@ function printClassificationWeather(sky, precipitation, time, width, height) {
         }
         // 저녁일때
     } else if (skyCode === 1 && hour === "night") {
-        console.log("skyCode === 1 hour === night");
+        // console.log("skyCode === 1 hour === night");
         switch (skyCode) {
             case 1:
                 return (<img src={nightImage} alt="밤 날씨 맑음" width={width} height={height} />);
@@ -79,7 +79,7 @@ function printClassificationWeather(sky, precipitation, time, width, height) {
                 break;
         }
     } else if (skyCode !== 1 && hour === "night") {
-        console.log("skyCode !== 1 && hour === night");
+        // console.log("skyCode !== 1 && hour === night");
         switch (precipitationCode) {
             case 0:
                 return (<img src={nightImage} alt="밤 날씨 맑음" width={width} height={height} />);
