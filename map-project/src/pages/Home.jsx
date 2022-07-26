@@ -1,9 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Pagination } from 'swiper';
 
 //styles
 import styles from '../styles/home.module.scss';
 import localImage from "../styles/images/icon_location.gif";
+import 'swiper/swiper-bundle.min.css';
+import 'swiper/swiper.min.css';
+import 'swiper/components/navigation/navigation.min.css';
+import 'swiper/components/pagination/pagination.min.css';
+import "../styles/swiperStyle.scss";
 
 //components
 import KakaoMap from '../components/KakaoMap';
@@ -15,6 +23,9 @@ import DayHelper from "../Helper/DayHelper.js";
 const Day = new DayHelper();
 
 const Home = () => {
+    const [currentDay, setCurrentDay] = useState("오늘");
+    // pagination use
+    SwiperCore.use([Pagination])
     const yoil = Day.getYoil();
     const hour = Day.get24Hour();
     const min = Day.getMin()
@@ -23,7 +34,10 @@ const Home = () => {
     const { local } = useSelector((state) => state.geoLocation);
     // 기온, 습도, 하늘상황(날씨), api데이터
     const { temperature, humidity, sky, precipitation, time } = useSelector((state) => state.liveForecast);
-    const { todayTemperature, highTemperatures, nowPrecipitationForm, rowTemperatures, nowTemperature, nowTime, nowSky } = useSelector((state) => state.todayForecast);
+    // 오늘 단기데이터, 내일, 내일 모레 api데이터
+    const { todayTemperature, highTemperatures, nowPrecipitationForm, rowTemperatures, nowTemperature, nowTime, nowSky, tomorrowPrecipitationForm, tomorrowTime, tomorrowTemperature, tomorrowSky, dayAfterTomorrowTime, dayAfterTomorrowTemperature, dayAfterTomorrowPrecipitationForm, dayAfterTomorrowSky } = useSelector((state) => state.todayForecast);
+
+
 
     // console.log(todayTemperature, todaySky, todayPrecipitationForm, todayTime)
 
@@ -69,24 +83,83 @@ const Home = () => {
                 {/* 단기 예보 */}
                 <div className={styles.weather_title}>
                     <h1>기온 및 날씨</h1>
+                    <span>({currentDay})</span>
                 </div>
+
                 {/* 그래프 */}
-                {todayTemperature && <div className={styles.weather_today_graph_wrapper}>
-                    {/*  */}
-                    <div className={styles.weather_today_graph_article_wrapper}>
-                        {/* 하늘 상태로 반복 */}
-                        {nowPrecipitationForm.map((item, index) => {
-                            return (
-                                <div className={styles.weather_today_graph_article_box} key={index}>
-                                    <span>{nowTemperature[index]}&deg;</span>
-                                    <WeatherImage data={{ precipitation: item, sky: nowSky[index], time: nowTime[index].slice(0, 2) }} width={25} height={25} />
-                                </div>
-                            )
-                        })}
-                    </div>
-                    {/* 그래프 */}
-                    <TodayWeatherGraph data={{ temperature: nowTemperature, time: nowTime }} />
-                </div>}
+                <Swiper
+                    direction={"vertical"}
+                    pagination={{ clickable: true }}
+                    modules={[Pagination]}
+                    onSlideChange={(e) => {
+                        console.log(e.activeIndex)
+                        if (e.activeIndex === 0) {
+                            setCurrentDay("오늘")
+                        } else if (e.activeIndex === 1) {
+                            setCurrentDay("내일")
+                        } else {
+                            setCurrentDay("모레")
+                        }
+                    }}
+                >
+                    <SwiperSlide>
+                        {todayTemperature && <div className={styles.weather_today_graph_wrapper}>
+                            {/*  */}
+                            <div className={styles.weather_today_graph_article_wrapper}>
+                                {/* 하늘 상태로 반복 */}
+                                {nowPrecipitationForm.map((item, index) => {
+                                    return (
+                                        <div className={styles.weather_today_graph_article_box} key={index}>
+                                            <span>{nowTemperature[index]}&deg;</span>
+                                            <WeatherImage data={{ precipitation: item, sky: nowSky[index], time: nowTime[index].slice(0, 2) }} width={25} height={25} />
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                            {/* 그래프 */}
+                            <TodayWeatherGraph data={{ temperature: nowTemperature, time: nowTime }} />
+                        </div>}
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        {tomorrowPrecipitationForm && <div className={styles.weather_today_graph_wrapper}>
+                            {/*  */}
+                            <div className={styles.weather_today_graph_article_wrapper}>
+                                {/* 하늘 상태로 반복 */}
+                                {tomorrowPrecipitationForm.map((item, index) => {
+                                    return (
+                                        <div className={styles.weather_today_graph_article_box} key={index}>
+                                            <span>{tomorrowTemperature[index]}&deg;</span>
+                                            <WeatherImage data={{ precipitation: item, sky: tomorrowSky[index], time: tomorrowTime[index].slice(0, 2) }} width={25} height={25} />
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                            {/* 그래프 */}
+                            <TodayWeatherGraph data={{ temperature: tomorrowTemperature, time: tomorrowTime }} />
+                        </div>}
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        {dayAfterTomorrowPrecipitationForm && <div className={styles.weather_today_graph_wrapper}>
+                            {/*  */}
+                            <div className={styles.weather_today_graph_article_wrapper}>
+                                {/* 하늘 상태로 반복 */}
+                                {dayAfterTomorrowPrecipitationForm.map((item, index) => {
+                                    return (
+                                        <div className={styles.weather_today_graph_article_box} key={index}>
+                                            <span>{dayAfterTomorrowTemperature[index]}&deg;</span>
+                                            <WeatherImage data={{ precipitation: item, sky: dayAfterTomorrowSky[index], time: dayAfterTomorrowTime[index].slice(0, 2) }} width={25} height={25} />
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                            {/* 그래프 */}
+                            <TodayWeatherGraph data={{ temperature: dayAfterTomorrowTemperature, time: dayAfterTomorrowTime }} />
+                        </div>}
+                    </SwiperSlide>
+                </Swiper>
+
+
+
 
                 {/* 주간 예보 */}
                 <div className={styles.weather_title}>
@@ -103,7 +176,7 @@ const Home = () => {
                             {parseInt(highTemperatures[0].fcstValue)}&deg;/ {parseInt(rowTemperatures[0].fcstValue)}&deg;
                         </span>}
                     </div>
-                    
+
                 </div>
 
                 {/* 초단기 예보 */}

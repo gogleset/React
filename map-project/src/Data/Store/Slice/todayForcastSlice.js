@@ -19,14 +19,19 @@ const initialState = {
     todayTime: null, //시간
 
     nowTime: null, //현재시간~ 19시간후
-    nowTemperature: null, //
+    nowTemperature: null,
     nowPrecipitationForm: null,
     nowSky: null,
 
-    tomorrowTime: null, //
-    tomorrowTemperature: null, //
+    tomorrowTime: null, //내일
+    tomorrowTemperature: null,
     tomorrowPrecipitationForm: null,
     tomorrowSky: null,
+
+    dayAfterTomorrowTime: null, //내일모레
+    dayAfterTomorrowTemperature: null,
+    dayAfterTomorrowPrecipitationForm: null,
+    dayAfterTomorrowSky: null,
     err: null,
 };
 
@@ -40,6 +45,7 @@ const todayForecastSlice = createSlice({
             state.err = action.payload.err;
             if (action.payload.data !== null) {
                 let now = `${Day.get24Hour()}00`;
+                // 오늘 데이터
                 state.todayTemperature = action.payload.data.filter(item => item.category === "TMP"); // 1시간 온도
                 state.todaySky = action.payload.data.filter(item => item.category === "SKY"); //하늘 상태
                 state.rowTemperatures = action.payload.data.filter(item => item.category === "TMN"); // 최저기온
@@ -54,16 +60,34 @@ const todayForecastSlice = createSlice({
                     state.todayTime = state.todayTemperature.map(item => item.fcstTime.slice(0, 2) +
                         ":" + item.fcstTime.slice(2));
                 }
-                console.log(dayjs(today).add(1, "day").format("YYYYMMDD"));
-                state.tomorrowTemperature = action.payload.data.filter(item => item.category === "TMP" && item.fcstDate === dayjs(today).add(1, "day").format("YYYYMMDD"));
-                state.tomorrowPrecipitationForm = action.payload.data.filter(item => item.category === "PTY" && item.fcstDate === dayjs(today).add(1, "day").format("YYYYMMDD"));
-                state.tomorrowSky = action.payload.data.filter(item => item.category === "SKY" && item.fcstDate === dayjs(today).add(1, "day").format("YYYYMMDD"))
-                if (state.tomorrowTemperature) {
+                // 내일 데이터 
+                state.tomorrowTemperature = action.payload.data.filter(item => item.category === "TMP" && item.fcstDate === dayjs(today).add(1, "day").format("YYYYMMDD"))
+                let tommorowTimeArr = [...state.tomorrowTemperature];
+                state.tomorrowTemperature = state.tomorrowTemperature.map(item => item.fcstValue)
+                state.tomorrowPrecipitationForm = action.payload.data.filter(item => item.category === "PTY" && item.fcstDate === dayjs(today).add(1, "day").format("YYYYMMDD")).map(item => item.fcstValue);
+                state.tomorrowSky = action.payload.data.filter(item => item.category === "SKY" && item.fcstDate === dayjs(today).add(1, "day").format("YYYYMMDD")).map(item => item.fcstValue)
+                if (tommorowTimeArr) {
                     state.tomorrowTime = null; //time
-                    state.tomorrowTime = state.tomorrowTemperature.map(item => item.fcstTime.slice(0, 2) +
+                    state.tomorrowTime = tommorowTimeArr.map(item => item.fcstTime.slice(0, 2) +
                         ":" + item.fcstTime.slice(2));
                 }
-                console.log(now)
+
+                //내일 모레 데이터
+                state.dayAfterTomorrowTemperature = action.payload.data.filter(item => item.category === "TMP" && item.fcstDate === dayjs(today).add(2, "day").format("YYYYMMDD"))
+                let dayTommorowAfterTimeArr = [...state.dayAfterTomorrowTemperature];
+                // map함수로 값만 추출
+                state.dayAfterTomorrowTemperature = state.dayAfterTomorrowTemperature.map(item => item.fcstValue)
+                state.dayAfterTomorrowPrecipitationForm = action.payload.data.filter(item => item.category === "PTY" && item.fcstDate === dayjs(today).add(2, "day").format("YYYYMMDD")).map(item => item.fcstValue);
+                state.dayAfterTomorrowSky = action.payload.data.filter(item => item.category === "SKY" && item.fcstDate === dayjs(today).add(2, "day").format("YYYYMMDD")).map(item => item.fcstValue)
+                if (dayTommorowAfterTimeArr) {
+                    state.dayAfterTomorrowTime = null; //time
+                    state.dayAfterTomorrowTime = dayTommorowAfterTimeArr.map(item => item.fcstTime.slice(0, 2) +
+                        ":" + item.fcstTime.slice(2));
+                }
+
+
+
+                // 지금 ~ 19시간 후 까지
                 // temperature 객체 복사
                 let temperatureArr = [...state.todayTemperature];
                 // time 객체 복사
@@ -72,7 +96,7 @@ const todayForecastSlice = createSlice({
                 let skyArr = [...state.todaySky]
                 for (let i = 0; i < state.todayTemperature.length; i++) {
                     // 오늘날짜 나오지 않는다면 짜름
-                    if (state.todayTemperature[i].fcstTime.indexOf(now) === 0) {
+                    if (state.todayTemperature[i].fcstTime.indexOf(now) === 0 && state.todayTemperature[i].fcstDate === today) {
                         break;
                     }
                     temperatureArr.shift()

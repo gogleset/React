@@ -54,7 +54,7 @@ const TodayWeatherGraph = ({ data }) => {
                 borderColor: 'rgb(54, 162, 235)',
                 borderWidth: 1,
                 data: temperature,
-                tension: 0.3,
+                tension: 0.2,
 
             },
         ],
