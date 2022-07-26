@@ -22,9 +22,9 @@ export default class date {
         return `${year}${month}${day}`;
     };
     // 요일데이터 출력
-    getYoil() {
+    getYoil(num = 0) {
         let now = dayjs().get('day');
-        switch (now) {
+        switch (now + num) {
             case 0:
                 now = "일"
                 break;

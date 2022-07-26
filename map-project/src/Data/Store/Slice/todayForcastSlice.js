@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import DayHelper from "../../../Helper/DayHelper.js";
+import dayjs from "dayjs";
 
 const Day = new DayHelper();
 const today = Day.getDay();
@@ -16,10 +17,16 @@ const initialState = {
     todaySnowfall: null, //강설량
     todayHumidity: null, //습도
     todayTime: null, //시간
+
     nowTime: null, //현재시간~ 19시간후
     nowTemperature: null, //
     nowPrecipitationForm: null,
     nowSky: null,
+
+    tomorrowTime: null, //
+    tomorrowTemperature: null, //
+    tomorrowPrecipitationForm: null,
+    tomorrowSky: null,
     err: null,
 };
 
@@ -43,11 +50,19 @@ const todayForecastSlice = createSlice({
                 state.todayPrecipitationForm = action.payload.data.filter(item => item.category === "PTY"); //강수형태
                 state.todaySnowfall = action.payload.data.filter(item => item.category === "SNO") //강설량
                 if (state.todayTemperature) {
-                    state.todayTime = null;
+                    state.todayTime = null; //time
                     state.todayTime = state.todayTemperature.map(item => item.fcstTime.slice(0, 2) +
                         ":" + item.fcstTime.slice(2));
                 }
-
+                console.log(dayjs(today).add(1, "day").format("YYYYMMDD"));
+                state.tomorrowTemperature = action.payload.data.filter(item => item.category === "TMP" && item.fcstDate === dayjs(today).add(1, "day").format("YYYYMMDD"));
+                state.tomorrowPrecipitationForm = action.payload.data.filter(item => item.category === "PTY" && item.fcstDate === dayjs(today).add(1, "day").format("YYYYMMDD"));
+                state.tomorrowSky = action.payload.data.filter(item => item.category === "SKY" && item.fcstDate === dayjs(today).add(1, "day").format("YYYYMMDD"))
+                if (state.tomorrowTemperature) {
+                    state.tomorrowTime = null; //time
+                    state.tomorrowTime = state.tomorrowTemperature.map(item => item.fcstTime.slice(0, 2) +
+                        ":" + item.fcstTime.slice(2));
+                }
                 console.log(now)
                 // temperature 객체 복사
                 let temperatureArr = [...state.todayTemperature];

@@ -23,7 +23,7 @@ const Home = () => {
     const { local } = useSelector((state) => state.geoLocation);
     // 기온, 습도, 하늘상황(날씨), api데이터
     const { temperature, humidity, sky, precipitation, time } = useSelector((state) => state.liveForecast);
-    const { todayTemperature, todaySky, nowPrecipitationForm, todayTime, nowTemperature, nowTime, nowSky } = useSelector((state) => state.todayForecast);
+    const { todayTemperature, highTemperatures, nowPrecipitationForm, rowTemperatures, nowTemperature, nowTime, nowSky } = useSelector((state) => state.todayForecast);
 
     // console.log(todayTemperature, todaySky, todayPrecipitationForm, todayTime)
 
@@ -40,6 +40,9 @@ const Home = () => {
                         {/* 이미지 추가 */}
                         {precipitation && <WeatherImage data={{ precipitation: precipitation[0].fcstValue, sky: sky[0].fcstValue, time: time[0] }} />}
                     </div>
+                    {highTemperatures && <span style={{ marginBottom: "10px" }}>
+                        {parseInt(highTemperatures[0].fcstValue)}&deg;/ {parseInt(rowTemperatures[0].fcstValue)}&deg;
+                    </span>}
                     {/* 현재 위치(동) */}
                     {local && <div>
                         <span className={styles.current_position_area}>
@@ -83,13 +86,24 @@ const Home = () => {
                     </div>
                     {/* 그래프 */}
                     <TodayWeatherGraph data={{ temperature: nowTemperature, time: nowTime }} />
-
-                </div>
-                }
+                </div>}
 
                 {/* 주간 예보 */}
                 <div className={styles.weather_title}>
                     <h1>주간 기온 및 날씨</h1>
+                </div>
+
+                <div style={{ maxWidth: "350px", height: "300px", boxShadow: "0 0 10px rgb(228, 228, 228)", borderRadius: "15px" }}>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        <span>{Day.getYoil(1)}요일</span>
+                        <span>60%</span>
+                        {precipitation && <WeatherImage data={{ precipitation: precipitation[0].fcstValue, sky: sky[0].fcstValue, time: time[0] }} width={20} height={20} />}
+                        {precipitation && <WeatherImage data={{ precipitation: precipitation[0].fcstValue, sky: sky[0].fcstValue, time: time[0] }} width={20} height={20} />}
+                        {highTemperatures && <span>
+                            {parseInt(highTemperatures[0].fcstValue)}&deg;/ {parseInt(rowTemperatures[0].fcstValue)}&deg;
+                        </span>}
+                    </div>
+                    
                 </div>
 
                 {/* 초단기 예보 */}

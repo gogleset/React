@@ -29,9 +29,9 @@ function printClassificationWeather(sky, precipitation, time, width, height) {
     const hour = Day.getEvent(times);
     const skyCode = parseInt(sky);
     const precipitationCode = parseInt(precipitation);
-    // console.log(`printClassificationWeather hour ::: ${hour} ${skyCode} ${precipitationCode}`)
+    console.log(`printClassificationWeather hour ::: ${hour} ${skyCode} ${precipitationCode}`)
     // 날씨 맑음일때는 sky값으로 출력
-    if (skyCode === 1 && hour === "morning") {
+    if (precipitationCode === 0 && hour === "morning") {
         // console.log("skyCode === 1 && hour === morning")
         switch (skyCode) {
             case 1:
@@ -44,7 +44,7 @@ function printClassificationWeather(sky, precipitation, time, width, height) {
                 alert('날씨 값이 들어오지 않았습니다.')
                 break;
         }
-    } else if (skyCode !== 1 && hour === "morning") {
+    } else if (precipitationCode !== 0 && hour === "morning") {
         // console.log("skyCode !== 1 hour === morning")
         switch (precipitationCode) {
             case 0:
@@ -55,6 +55,8 @@ function printClassificationWeather(sky, precipitation, time, width, height) {
                 return (<img src={snowImage} alt="날씨 비와 눈" width={width} height={height} />)
             case 3:
                 return (<img src={snowImage} alt="날씨 눈" width={width} height={height} />)
+            case 4:
+                return (<img src={rainImage} alt="날씨 소나기" width={width} height={height} />);
             case 5:
                 return (<img src={rainImage} alt="날씨 빗방울" width={width} height={height} />)
             case 6:
@@ -65,7 +67,7 @@ function printClassificationWeather(sky, precipitation, time, width, height) {
                 return;
         }
         // 저녁일때
-    } else if (skyCode === 1 && hour === "night") {
+    } else if (precipitationCode === 0 && hour === "night") {
         // console.log("skyCode === 1 hour === night");
         switch (skyCode) {
             case 1:
@@ -78,7 +80,7 @@ function printClassificationWeather(sky, precipitation, time, width, height) {
                 alert('날씨 값이 들어오지 않았습니다.')
                 break;
         }
-    } else if (skyCode !== 1 && hour === "night") {
+    } else if (precipitationCode !== 0 && hour === "night") {
         // console.log("skyCode !== 1 && hour === night");
         switch (precipitationCode) {
             case 0:

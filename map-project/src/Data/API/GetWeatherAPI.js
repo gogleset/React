@@ -16,7 +16,7 @@ export default {
     // 오늘데이터를 가져옵니다.
     getTodayForcast: async (nx, ny) => {
         try {
-            const data = await axios.get('/api' + `${config.weatherUrls}${config.TodayForcast}ServiceKey=${config.keys.weatherEncodingKey}&pageNo=1&numOfRows=576&dataType=JSON&base_date=${Number(hour) === 24 || Number(hour) === 1 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=0200&nx=${nx}&ny=${ny}`);
+            const data = await axios.get('/api' + `${config.weatherUrls}${config.TodayForcast}ServiceKey=${config.keys.weatherEncodingKey}&pageNo=1&numOfRows=864&dataType=JSON&base_date=${Number(hour) === 24 || Number(hour) === 1 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=0200&nx=${nx}&ny=${ny}`);
             // console.log(data);
             return { data: data };
         } catch (err) {
