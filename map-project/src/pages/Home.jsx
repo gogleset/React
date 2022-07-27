@@ -6,7 +6,7 @@ import SwiperCore, { Pagination } from 'swiper';
 
 //styles
 import styles from '../styles/home.module.scss';
-import localImage from "../styles/images/icon_location.gif";
+import localImage from "../asset/images/icon_location.gif";
 import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.min.css';
 import 'swiper/components/navigation/navigation.min.css';

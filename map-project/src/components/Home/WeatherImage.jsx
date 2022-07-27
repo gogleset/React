@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import sunImage from "../../styles/images/icon_sun.gif";
-import cloudImage from "../../styles/images/icon_cloud.png";
-import manyCloudImage from "../../styles/images/icon_cloud_many.png";
-import rainImage from "../../styles/images/icon_rain.gif";
-import snowImage from "../../styles/images/icon_snow.gif";
-import nightImage from "../../styles/images/icon_night.gif";
+import sunImage from "../../asset/images/icon_sun.gif";
+import cloudImage from "../../asset/images/icon_cloud.png";
+import manyCloudImage from "../../asset/images/icon_cloud_many.png";
+import rainImage from "../../asset/images/icon_rain.gif";
+import snowImage from "../../asset/images/icon_snow.gif";
+import nightImage from "../../asset/images/icon_night.gif";
 import DayHelper from "../../Helper/DayHelper.js";
 
 const WeatherImage = ({ data, width, height }) => {

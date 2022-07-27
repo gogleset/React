@@ -14,8 +14,11 @@ export default {
     weatherUrls:"/1360000/VilageFcstInfoService_2.0",
     breakingNewsUrls:"/1360000/WthrWrnInfoService", 
     warningNews:"/getWthrWrnList",//news 특보
-    
+    weeklyLandUrl:"/1360000/MidFcstInfoService",
+    weeklyTemperatureUrl: "/1360000/MidFcstInfoService",
     liveSituation: "/getUltraSrtNcst?",
-    liveForcast:"/getUltraSrtFcst?",
-    TodayForcast : "/getVilageFcst?",
+    liveForecast:"/getUltraSrtFcst?",
+    todayForecast : "/getVilageFcst?",
+    weeklyLandForecast: "/getMidLandFcst?",
+    weeklyTemperatureForecast: "/getMidTa?"
 }

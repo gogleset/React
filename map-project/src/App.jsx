@@ -5,8 +5,9 @@ import { Route, Routes } from "react-router-dom";
 // data, apis
 import { changeLocationValue, changeLocalValue } from "./Data/Store/Slice/geoLocationSlice.js";
 import { changeLiveForecastValue } from "./Data/Store/Slice/liveForecastSlice.js"
-import { changeTodayForecastValue } from "./Data/Store/Slice/todayForcastSlice"
-import { getCurrentLocation, getAddress, dfs_xy_conv } from './Helper/GeolocationHelper.js';
+import { changeTodayForecastValue } from "./Data/Store/Slice/todayForecastSlice";
+import { changeWeeklyLandForecastValue, changeWeeklyTemperatureForecastValue } from "./Data/Store/Slice/weeklyForcastSlice"
+import { getCurrentLocation, dfs_xy_conv } from './Helper/GeolocationHelper.js';
 import GetWeatherAPI from "./Data/API/GetWeatherAPI.js";
 
 // styles
@@ -47,11 +48,22 @@ function App() {
         dispatch(changeLiveForecastValue({ data: null, status: 400, err: "NO" }));
       });
       // 주소값 구하기
-      getAddress(latitude, longitude)
+      GetWeatherAPI.getAddress(latitude, longitude)
         .then(res => dispatch(changeLocalValue(res)))
         .catch(rej => alert("주소값을 가져오지 못했습니다."));
     }
-  }, [err])
+  }, [err]);
+  useEffect(() => {
+    if (local) {
+      GetWeatherAPI.getWeeklyLandForecast(local.address_name).then((res) => {
+        dispatch(changeWeeklyLandForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
+      }).catch((rej) => {
+        dispatch(changeLiveForecastValue({ data: null, status: 400, err: "NO" }));
+      });
+      GetWeatherAPI.getWeeklyTemperatureForecast(local.address_name).then((res) => console.log(res))
+    }
+
+  }, [local])
 
   return (
     <div className="container">
