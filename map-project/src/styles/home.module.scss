@@ -83,7 +83,7 @@
     overflow-x: auto;
     margin: 0 auto;
     background-color: white;
-  
+
 
     -ms-overflow-style: none;
     /* IE and Edge */
@@ -119,6 +119,26 @@
     background: rgb(155, 204, 236);
     /* 스크롤바의 색상 */
     border-radius: 10px;
+}
+
+.weekly_weather_wrapper {
+    max-width: 350px;
+    box-shadow: 0 0 10px rgb(228, 228, 228);
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.weekly_weather_box {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    justify-content: space-between;
+}
+
+.weekly_weather_item {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
 }
 
 // .weather_today_wrapper::-webkit-scrollbar-track {

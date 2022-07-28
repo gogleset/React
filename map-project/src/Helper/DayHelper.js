@@ -23,34 +23,36 @@ export default class date {
     };
     // 요일데이터 출력
     getYoil(num = 0) {
-        let now = dayjs().get('day');
-        switch (now + num) {
+        const adddays = dayjs(today).add(num, "day")
+        let day = dayjs(adddays).get('day');
+        console.log(day);
+        switch (day) {
             case 0:
-                now = "일"
+                day = "일"
                 break;
             case 1:
-                now = "월"
+                day = "월"
                 break;
             case 2:
-                now = "화"
+                day = "화"
                 break;
             case 3:
-                now = "수"
+                day = "수"
                 break;
             case 4:
-                now = "목"
+                day = "목"
                 break;
             case 5:
-                now = "금"
+                day = "금"
                 break;
             case 6:
-                now = "토"
+                day = "토"
                 break;
             default:
-                now = "날짜 데이터 조회 실패"
+                day = "날짜 데이터 조회 실패"
                 break;
         }
-        return now;
+        return day;
     };
     //서버로 요청하는 시간
     getServerHour() {
@@ -60,7 +62,7 @@ export default class date {
         if (hour.length === 1) {
             hour = "0" + hour;
         }
-        if(hour === "-1") {
+        if (hour === "-1") {
             hour = 23;
         }
         return `${hour}`

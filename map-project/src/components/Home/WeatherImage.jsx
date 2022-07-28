@@ -9,27 +9,61 @@ import DayHelper from "../../Helper/DayHelper.js";
 
 const WeatherImage = ({ data, width, height }) => {
 
-    const { sky, precipitation, time } = data;
+    const { sky, precipitation, time, weeklySky } = data;
 
 
-    useEffect(() => {
-        // console.log(sky, precipitation, time);
-    }, [sky])
+    // useEffect(() => {
+    //     console.log(weeklySky);
+    // }, [weeklySky])
 
     return (
         <div>
-            {data && printClassificationWeather(sky, precipitation, parseInt(time), width, height)}
+            {weeklySky ? printWeeklyWeather(weeklySky, width, height) : printClassificationWeather(sky, precipitation, parseInt(time), width, height)}
         </div>
     );
 };
+function printWeeklyWeather(sky, width, height) {
+    switch (sky.trim()) {
+        case "맑음":
+            return (<img src={sunImage} alt="날씨 맑음" width={width} height={height} />);
+        case "흐림":
+            return (<img src={cloudImage} alt="날씨 흐림" width={width} height={height} />);
+        case "흐리고 비":
+            return (<img src={rainImage} alt="날씨 흐리고 비" width={width} height={height} />)
+        case "흐리고 눈":
+            return (<img src={snowImage} alt="날씨 흐리고 눈" width={width} height={height} />)
+        case "흐리고 비/눈":
+            return (<img src={snowImage} alt="날씨 흐리고 비/눈" width={width} height={height} />)
+        case "흐리고 소나기":
+            return (<img src={rainImage} alt="날씨 흐리고 소나기" width={width} height={height} />)
+        case "구름많음":
+            return (<img src={manyCloudImage} alt="날씨 구름 많음" width={width} height={height} />);
+        case "구름많고 눈":
+            return (<img src={snowImage} alt="날씨 구름많고 눈" width={width} height={height} />);
+        case "구름많고 비/눈":
+            return (<img src={snowImage} alt="날씨 구름많고 비/눈" width={width} height={height} />);
+        case "구름많고 소나기":
+            return (<img src={rainImage} alt="날씨 구름많고 소나기" width={width} height={height} />);
+        default:
+            alert("주간 날씨 데이터가 없습니다.")
+            break;
+    }
+
+}
+
+
+
 // 값을 분류하여 Image리턴
 function printClassificationWeather(sky, precipitation, time, width, height) {
     const Day = new DayHelper();
     let times = parseInt(time);
+    // 저녁, 아침 구하기
     const hour = Day.getEvent(times);
+    // 하늘상태 코드
     const skyCode = parseInt(sky);
+    // 날씨 코드
     const precipitationCode = parseInt(precipitation);
-    console.log(`printClassificationWeather hour ::: ${hour} ${skyCode} ${precipitationCode}`)
+    // console.log(`printClassificationWeather hour ::: ${hour} ${skyCode} ${precipitationCode}`)
     // 날씨 맑음일때는 sky값으로 출력
     if (precipitationCode === 0 && hour === "morning") {
         // console.log("skyCode === 1 && hour === morning")

@@ -60,7 +60,12 @@ function App() {
       }).catch((rej) => {
         dispatch(changeLiveForecastValue({ data: null, status: 400, err: "NO" }));
       });
-      GetWeatherAPI.getWeeklyTemperatureForecast(local.address_name).then((res) => console.log(res))
+
+      GetWeatherAPI.getWeeklyTemperatureForecast(local.address_name).then((res) => {
+        dispatch(changeWeeklyTemperatureForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
+      }).catch((rej) => {
+        dispatch(changeWeeklyTemperatureForecastValue({ data: null, status: 400, err: "NO" }));
+      });
     }
 
   }, [local])

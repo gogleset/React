@@ -42,7 +42,7 @@ export default {
     },
     // 중기 육상(강수확률, 날씨)
     getWeeklyLandForecast: async (local) => {
-        console.log(local);
+        // console.log(local);
         const weeklyLandCode = getWeeklyLandCode(local)
         //local은 지역명이 들어있어야한다.
         try {

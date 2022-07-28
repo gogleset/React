@@ -7,6 +7,7 @@ import SwiperCore, { Pagination } from 'swiper';
 //styles
 import styles from '../styles/home.module.scss';
 import localImage from "../asset/images/icon_location.gif";
+import rainImage from "../asset/images/icon_rain.gif";
 import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.min.css';
 import 'swiper/components/navigation/navigation.min.css';
@@ -36,10 +37,11 @@ const Home = () => {
     const { temperature, humidity, sky, precipitation, time } = useSelector((state) => state.liveForecast);
     // 오늘 단기데이터, 내일, 내일 모레 api데이터
     const { todayTemperature, highTemperatures, nowPrecipitationForm, rowTemperatures, nowTemperature, nowTime, nowSky, tomorrowPrecipitationForm, tomorrowTime, tomorrowTemperature, tomorrowSky, dayAfterTomorrowTime, dayAfterTomorrowTemperature, dayAfterTomorrowPrecipitationForm, dayAfterTomorrowSky } = useSelector((state) => state.todayForecast);
+    // 주간 날씨데이터, 기온데이터
+    const { weeklyLandData, weeklyTemperatureData } = useSelector((state) => state.weeklyForecast)
 
 
-
-    // console.log(todayTemperature, todaySky, todayPrecipitationForm, todayTime)
+    console.log(weeklyLandData, weeklyTemperatureData,)
 
 
     return (
@@ -166,28 +168,61 @@ const Home = () => {
                     <h1>주간 기온 및 날씨</h1>
                 </div>
 
-                <div style={{ maxWidth: "350px", height: "300px", boxShadow: "0 0 10px rgb(228, 228, 228)", borderRadius: "15px" }}>
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        <span>{Day.getYoil(1)}요일</span>
-                        <span>60%</span>
-                        {precipitation && <WeatherImage data={{ precipitation: precipitation[0].fcstValue, sky: sky[0].fcstValue, time: time[0] }} width={20} height={20} />}
-                        {precipitation && <WeatherImage data={{ precipitation: precipitation[0].fcstValue, sky: sky[0].fcstValue, time: time[0] }} width={20} height={20} />}
-                        {highTemperatures && <span>
-                            {parseInt(highTemperatures[0].fcstValue)}&deg;/ {parseInt(rowTemperatures[0].fcstValue)}&deg;
-                        </span>}
-                    </div>
+                {weeklyLandData && <div className={styles.weekly_weather_wrapper}>
+                    {weeklyLandData && [...Array(5)].map((item, index) => {
+                        console.log(index + 3);
+                        return (
+                            <div className={styles.weekly_weather_box} key={index}>
+                                <span style={{ marginRight: "10px" }}>{Day.getYoil(index + 3)}요일</span>
+                                <div className={styles.weekly_weather_item}>
+                                    <img src={rainImage} alt="오전 강수확률" width={20} height={20} />
+                                    <span style={{ fontSize: "13px" }}>
+                                        {weeklyLandData[0][`rnSt${index + 3}Am`]}%
+                                    </span>
+                                </div>
+                                <div className={styles.weekly_weather_item}>
+                                    <img src={rainImage} alt="오후 강수확률" width={20} height={20} />
+                                    <span style={{ fontSize: "13px" }}>
+                                        {weeklyLandData[0][`rnSt${index + 3}Pm`]}%
+                                    </span>
 
-                </div>
+                                </div>
+                                <div className={styles.weekly_weather_item}>
+                                    <div style={{ marginRight: "5px" }}>
+                                        <WeatherImage data={{ weeklySky: weeklyLandData[0][`wf${index + 3}Am`] }} width={25} height={25} />
+                                    </div>
+                                    <div style={{ marginRight: "13px" }}>
+                                        <WeatherImage data={{ weeklySky: weeklyLandData[0][`wf${index + 3}Am`] }} width={25} height={25} />
+                                    </div>
+                                    <span style={{ marginRight: "1px" }}>{weeklyTemperatureData[0][`taMax${index + 3}`]}&deg;/</span>
+                                    <span>{weeklyTemperatureData[0][`taMin${index + 3}`]}&deg;</span>
+                                </div>
+                            </div>
+                        )
+                    })}
+                    {weeklyLandData && [...Array(3)].map((item, index) => {
+                        // console.log(index)
+                        return (
+                            <div className={styles.weekly_weather_box}>
+                                <div className={styles.weekly_weather_item}>
+                                    <span style={{ marginRight: "55px" }}>{Day.getYoil(index + 8)}요일</span>
+                                    <img src={rainImage} alt="강수 확률" width={20} height={20} />
+                                    <span style={{ fontSize: "13px" }}>
+                                        {weeklyLandData[0][`rnSt${index + 8}`]}%
+                                    </span>
+                                </div>
+                                <div className={styles.weekly_weather_item}>
+                                    <div style={{ marginRight: "25px" }}>
+                                        <WeatherImage data={{ weeklySky: weeklyLandData[0][`wf${index + 8}`] }} width={25} height={25} />
+                                    </div>
+                                    <span style={{ marginRight: "1px" }}>{weeklyTemperatureData[0][`taMax${index + 8}`]}&deg;/</span>
+                                    <span>{weeklyTemperatureData[0][`taMin${index + 8}`]}&deg;</span>
+                                </div>
+                            </div>
+                        )
+                    })}
 
-                {/* 초단기 예보 */}
-                {/* <div className={styles.weather_title}>
-                    <h1>기온 및 날씨</h1>
-                    {time && <span>
-                        ({time[0]}~{time[5]})-초단기 데이터
-                    </span>}
-                </div> */}
-
-                {/* {temperature && <TodayWeatherGraph data={{ temperature: temperature, humidity: humidity, precipitation: precipitation, time: time }} />} */}
+                </div>}
 
                 <div className={styles.weather_title}>
                     <h1>속보·특보</h1>

@@ -14,7 +14,7 @@ const store = configureStore({
         geoLocation: geoLocationSlice,
         liveForecast: liveForecastSlice,
         todayForecast: todayForecastSlice,
-        weeklyLandForecast: weeklyForecastSlice
+        weeklyForecast: weeklyForecastSlice
     },
 
     // 미들웨어를 사용하지 않을 경우 이 라인 생략가능
