@@ -105,7 +105,7 @@ const Home = () => {
                     }}
                 >
                     <SwiperSlide>
-                        {todayTemperature && <div className={styles.weather_today_graph_wrapper}>
+                        {nowPrecipitationForm && <div className={styles.weather_today_graph_wrapper}>
                             {/*  */}
                             <div className={styles.weather_today_graph_article_wrapper}>
                                 {/* 하늘 상태로 반복 */}
@@ -168,8 +168,8 @@ const Home = () => {
                     <h1>주간 기온 및 날씨</h1>
                 </div>
 
-                {weeklyLandData && <div className={styles.weekly_weather_wrapper}>
-                    {weeklyLandData && [...Array(5)].map((item, index) => {
+                {weeklyLandData && weeklyTemperatureData && <div className={styles.weekly_weather_wrapper}>
+                    {[...Array(5)].map((item, index) => {
                         console.log(index + 3);
                         return (
                             <div className={styles.weekly_weather_box} key={index}>
@@ -200,10 +200,10 @@ const Home = () => {
                             </div>
                         )
                     })}
-                    {weeklyLandData && [...Array(3)].map((item, index) => {
-                        // console.log(index)
+                    {[...Array(3)].map((item, index) => {
+                        console.log(`taMax${index + 8}`)
                         return (
-                            <div className={styles.weekly_weather_box}>
+                            <div className={styles.weekly_weather_box} key={index}>
                                 <div className={styles.weekly_weather_item}>
                                     <span style={{ marginRight: "55px" }}>{Day.getYoil(index + 8)}요일</span>
                                     <img src={rainImage} alt="강수 확률" width={20} height={20} />
@@ -221,7 +221,6 @@ const Home = () => {
                             </div>
                         )
                     })}
-
                 </div>}
 
                 <div className={styles.weather_title}>
