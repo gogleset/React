@@ -6,7 +6,11 @@ import { Route, Routes } from "react-router-dom";
 import { changeLocationValue, changeLocalValue } from "./Data/Store/Slice/geoLocationSlice.js";
 import { changeLiveForecastValue } from "./Data/Store/Slice/liveForecastSlice.js"
 import { changeTodayForecastValue } from "./Data/Store/Slice/todayForecastSlice";
-import { changeWeeklyLandForecastValue, changeWeeklyTemperatureForecastValue } from "./Data/Store/Slice/weeklyForcastSlice"
+import { changeWeeklyLandForecastValue, changeWeeklyTemperatureForecastValue } from "./Data/Store/Slice/weeklyForcastSlice";
+import { changeSunriseForecastValue } from "./Data/Store/Slice/sunriseForecastSlice.js"
+import {
+  changeradarForecastValue
+} from "./Data/Store/Slice/radarForecastSlice.js";
 import { getCurrentLocation, dfs_xy_conv } from './Helper/GeolocationHelper.js';
 import GetWeatherAPI from "./Data/API/GetWeatherAPI.js";
 
@@ -51,10 +55,27 @@ function App() {
       GetWeatherAPI.getAddress(latitude, longitude)
         .then(res => dispatch(changeLocalValue(res)))
         .catch(rej => alert("주소값을 가져오지 못했습니다."));
+
+      // 일출, 일몰
+      GetWeatherAPI.getSunriseForecast(latitude, longitude).then((res) => {
+        console.log(res);
+        dispatch(changeSunriseForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
+      }).catch((rej) => {
+        dispatch(changeSunriseForecastValue({ data: null, status: 400, err: "NO" }));
+      });
+      // 레이더
+      GetWeatherAPI.getRadarForecast().then((res) => {
+        console.log(res);
+        dispatch(changeradarForecastValue({ data: res.data.data.response.body.items.item[0]["rdr-img-file"], status: res.data.status, err: res.data.statusText }));
+      }).catch((rej) => {
+        dispatch(changeradarForecastValue({ data: null, status: 400, err: "NO" }));
+      });
     }
   }, [err]);
+
   useEffect(() => {
     if (local) {
+      // 주간 날씨 데이터 dispatch
       GetWeatherAPI.getWeeklyLandForecast(local.address_name).then((res) => {
         dispatch(changeWeeklyLandForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
       }).catch((rej) => {

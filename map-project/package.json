@@ -63,7 +63,6 @@
   "author": "gogleset",
   "license": "MIT",
   "devDependencies": {
-    "nodemon": "^2.0.19",
-    "react-error-overlay": "6.0.9"
+    "nodemon": "^2.0.19"
   }
 }

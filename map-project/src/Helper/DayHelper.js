@@ -25,7 +25,6 @@ export default class date {
     getYoil(num = 0) {
         const adddays = dayjs(today).add(num, "day")
         let day = dayjs(adddays).get('day');
-        console.log(day);
         switch (day) {
             case 0:
                 day = "일"
@@ -109,5 +108,18 @@ export default class date {
         } else {
             return "night"
         }
-    }
+    };
+    // 레이더에 비추는 시간 구하기
+    // getRadarHourTick(hour, setHour) {
+    //     let hours = hour
+    //     let timer = setInterval(() => {
+    //         if (hours > 23) {
+    //             clearInterval(timer)
+    //         } else {
+    //             hours++;
+    //             // console.log(hours)
+    //             setHour(parseInt(hours))
+    //         }
+    //     }, 1000)
+    // }
 }
