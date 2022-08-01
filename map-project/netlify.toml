@@ -1,6 +1,5 @@
 [build]
    command = "CI= npm run build"
-   publish = "dist/"
 
 [[redirects]]
   from = "/api/*"
