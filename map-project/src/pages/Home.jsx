@@ -6,16 +6,16 @@ import styles from '../styles/home.module.scss';
 import 'swiper/swiper.min.css';
 import 'swiper/components/navigation/navigation.min.css';
 import 'swiper/components/pagination/pagination.min.css';
-import "../styles/swiperStyle.scss";
+import "../styles/swiper.scss";
 
 //components
-
 import HomeMain from "../components/HomeBox/HomeMain.jsx";
 import HomeDayBox from "../components/HomeBox/HomeDayBox.jsx";
 import HomeWeekBox from "../components/HomeBox/HomeWeekBox.jsx";
 import HomeSunRiseSet from "../components/HomeBox/HomeSunRiseSet.jsx";
 import HomeDust from "../components/HomeBox/HomeDust.jsx";
 import HomeRadar from "../components/HomeBox/HomeRadar.jsx";
+import HomeNews from "../components/HomeBox/HomeNews.jsx";
 
 const Home = () => {
 
@@ -27,6 +27,8 @@ const Home = () => {
             <div className={styles.weather_wrapper}>
                 {/* 단기 데이터 오늘, 모레 내일 */}
                 <HomeDayBox />
+                {/* 특보 속보데이터 */}
+                <HomeNews />
 
                 {/* 주간데이터 3일후~ 10일후까지 */}
                 <HomeWeekBox />

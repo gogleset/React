@@ -11,8 +11,7 @@ export default {
     },
     url: "http://apis.data.go.kr",
     weatherUrls: "/1360000/VilageFcstInfoService_2.0",
-    breakingNewsUrls: "/1360000/WthrWrnInfoService",
-    warningNews: "/getWthrWrnList",//news 특보
+    breakingNewsUrl: "/1360000/WthrWrnInfoService",
     weeklyLandUrl: "/1360000/MidFcstInfoService",
     weeklyTemperatureUrl: "/1360000/MidFcstInfoService",
     sunriseUrl: "/B090041/openapi/service/RiseSetInfoService/getLCRiseSetInfo?",
@@ -26,6 +25,8 @@ export default {
     weeklyLandForecast: "/getMidLandFcst?",
     weeklyTemperatureForecast: "/getMidTa?",
     sidoDustForecast: "/getCtprvnRltmMesureDnsty?",
+    breakingNewsForecast: "/getWthrWrnMsg?",
+    fastNewsForecast: "/getWthrBrkNews?"
 }
 
-// http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?sidoName=서울&pageNo=1&numOfRows=100&returnType=xml&serviceKey=서비스키&ver=1.0
+// http://apis.data.go.kr/1360000/WthrWrnInfoService/getWthrBrkNews?serviceKey=인증키&numOfRows=10&pageNo=1&stnId=108&fromTmFc=20170607&toTmFc=20170607

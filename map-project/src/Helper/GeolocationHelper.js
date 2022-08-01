@@ -64,6 +64,45 @@ function getWeeklyTemperatureForecastCode(local) {
     return filters.code;
 }
 
+// 기상특보속보 지점코드를 반환하는 함수
+function getBreakFastForecastCode(local) {
+    console.log(local)
+    if (local) {
+        switch (local) {
+            case "서울":
+            case "인천":
+            case "경기":
+                return 109;
+            case "부산":
+            case "울산":
+            case "경남":
+                return 159;
+            case "대구":
+            case "경북":
+                return 143;
+            case "광주":
+            case "전남":
+                return 156;
+            case "전북":
+                return 146;
+            case "대전":
+            case "세종":
+            case "충남":
+                return 133;
+            case "충북":
+                return 131;
+            case "강원":
+                return 105;
+            case "제주특별자치도":
+                return 184;
+            default:
+                return 108;
+        }
+    } else {
+        throw new Error("데이터 없음")
+    }
+}
+
 
 // LCC DFS 좌표변환 ( code : "toXY"(위경도->좌표, v1:위도, v2:경도), "toLL"(좌표->위경도,v1:x, v2:y) ) - 기상청 제공
 function dfs_xy_conv(code, v1, v2) {
@@ -136,4 +175,4 @@ function dfs_xy_conv(code, v1, v2) {
 
 
 
-export { getCurrentLocation, getWeeklyLandCode, dfs_xy_conv, getWeeklyTemperatureForecastCode };
+export { getCurrentLocation, getWeeklyLandCode, dfs_xy_conv, getWeeklyTemperatureForecastCode, getBreakFastForecastCode };

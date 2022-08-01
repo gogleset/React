@@ -11,6 +11,7 @@ import { changeSunriseForecastValue } from "./Data/Store/Slice/sunriseForecastSl
 import {
   changeradarForecastValue
 } from "./Data/Store/Slice/radarForecastSlice.js";
+import { changeBreakForecastValue, changeFastForecastValue } from './Data/Store/Slice/breakFastForecastSlice.js';
 import { getCurrentLocation, dfs_xy_conv } from './Helper/GeolocationHelper.js';
 import GetWeatherAPI from "./Data/API/GetWeatherAPI.js";
 
@@ -81,13 +82,27 @@ function App() {
       }).catch((rej) => {
         dispatch(changeLiveForecastValue({ data: null, status: 400, err: "NO" }));
       });
-
+      // 주간 날씨 데이터 dispatch
       GetWeatherAPI.getWeeklyTemperatureForecast(local.address_name).then((res) => {
         dispatch(changeWeeklyTemperatureForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
       }).catch((rej) => {
         dispatch(changeWeeklyTemperatureForecastValue({ data: null, status: 400, err: "NO" }));
       });
-      GetWeatherAPI.getSidoDustForecast(local.region_1depth_name).then((res) => { console.log(res) })
+      // 미세먼지
+      // GetWeatherAPI.getSidoDustForecast(local.region_1depth_name).then((res) => { console.log(res) })
+      // 
+      // 특보
+      GetWeatherAPI.getBreakForecast(local.region_1depth_name).then((res) => {
+        dispatch(changeBreakForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
+      }).catch((rej) => {
+        dispatch(changeBreakForecastValue({ data: null, status: 400, err: "NO" }));
+      });
+      GetWeatherAPI.getFastForecast(local.region_1depth_name).then((res) => {
+        console.log(res);
+        dispatch(changeFastForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
+      }).catch((rej) => {
+        dispatch(changeFastForecastValue({ data: null, status: 400, err: "NO" }));
+      });
     }
 
   }, [local])

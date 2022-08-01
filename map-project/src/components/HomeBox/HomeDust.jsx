@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 
 import styles from "../../styles/home.module.scss";
 import infoImage from "../../asset/images/icon_info.png";
-
 import dustImage from "../../asset/images/icon_dust.png";
 import ultraDustImage from "../../asset/images/icon_ultra_dust.png";
 

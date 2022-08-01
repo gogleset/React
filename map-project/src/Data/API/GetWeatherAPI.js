@@ -2,7 +2,7 @@ import axios from "axios";
 import config from "../../config.js";
 import DayHelper from "../../Helper/DayHelper.js";
 import dayjs from "dayjs";
-import { getWeeklyLandCode, getWeeklyTemperatureForecastCode } from "../../Helper/GeolocationHelper.js";
+import { getWeeklyLandCode, getWeeklyTemperatureForecastCode, getBreakFastForecastCode } from "../../Helper/GeolocationHelper.js";
 const Day = new DayHelper();
 const today = Day.getDay(); //현재 날짜
 const serverHour = Day.getServerHour(); //현재 시간
@@ -90,7 +90,6 @@ export default {
     getSidoDustForecast: async (local) => {
         console.log(local);
         try {
-            // http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?sidoName=서울&pageNo=1&numOfRows=100&returnType=xml&serviceKey=서비스키&ver=1.0
             console.log(`${config.dustUrl}${config.sidoDustForecast}sidoName=서울&pageNo=1&numOfRows=100&returnType=xml&serviceKey=${config.keys.encodingKey}&ver=1.3`)
             const data = await axios.get('/api' + `${config.dustUrl}${config.sidoDustForecast}sidoName=서울&pageNo=1&numOfRows=100&returnType=json&serviceKey=${config.keys.encodingKey}&ver=1.3`)
             return { data: data };
@@ -98,6 +97,27 @@ export default {
             throw new Error(err);
         }
     },
+    // 특보 데이터 정보
+    getBreakForecast: async (local) => {
+        const brackCode = getBreakFastForecastCode(local)
+        try {
+            const data = await axios.get('/api' + `${config.breakingNewsUrl}${config.breakingNewsForecast}serviceKey=${config.keys.encodingKey}&dataType=JSON&numOfRows=10&pageNo=1&fromTmFc=${dayjs(today).subtract(1, "day").format("YYYYMMDD")}&toTmFc=${today}&stnId=${brackCode}`)
+            return { data: data };
+        } catch (err) {
+            throw new Error(err);
+        }
+    },
+    //속보 데이터 정보
+    getFastForecast: async (local) => {
+        const fastCode = getBreakFastForecastCode(local)
+        try {
+            const data = await axios.get('/api' + `${config.breakingNewsUrl}${config.fastNewsForecast}serviceKey=${config.keys.encodingKey}&dataType=JSON&numOfRows=10&pageNo=1&stnId=${fastCode}&fromTmFc=${today}&toTmFc=${today}`)
+            return { data: data };
+        } catch (err) {
+            throw new Error(err);
+        }
+    },
+    // http://apis.data.go.kr/1360000/WthrWrnInfoService/getWthrBrkNews?serviceKey=인증키&numOfRows=10&pageNo=1&stnId=108&fromTmFc=20170607&toTmFc=20170607
 
     // 현재위치 기반 동네 주소 가져오기
     getAddress: async (latitude, longitude) => {

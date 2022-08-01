@@ -6,6 +6,7 @@ import todayForecastSlice from './Slice/todayForecastSlice.js';
 import weeklyForecastSlice from './Slice/weeklyForcastSlice.js';
 import sunriseForecastSlice from './Slice/sunriseForecastSlice.js';
 import radarForecastSlice from './Slice/radarForecastSlice.js';
+import breakFastForecastSlice from './Slice/breakFastForecastSlice.js';
 
 
 // Slice 오브젝트 참조 구문 명시 위치
@@ -20,6 +21,7 @@ const store = configureStore({
         weeklyForecast: weeklyForecastSlice,
         sunriseForecast: sunriseForecastSlice,
         radarForecast: radarForecastSlice,
+        breakFastForecast: breakFastForecastSlice,
     },
 
     // 미들웨어를 사용하지 않을 경우 이 라인 생략가능

@@ -41,3 +41,7 @@
 .swiper-pagination-bullet-active {
     background-color: gray;
 }
+
+.swiper-container-vertical>.swiper-pagination-bullets .swiper-pagination-bullet {
+    margin: 6px 0px;
+}
