@@ -52,7 +52,7 @@ export default {
             throw new Error(err);
         }
     },
-
+    // 주간 날씨예보 기온
     getWeeklyTemperatureForecast: async (local) => {
         console.log(local);
         // 지역code 가져오기
@@ -77,9 +77,22 @@ export default {
             throw new Error(err);
         }
     },
+    // 레이더 정보
     getRadarForecast: async () => {
         try {
             const data = await axios.get('/api' + `${config.radarUrl}serviceKey=${config.keys.encodingKey}&numOfRows=10&pageNo=1&dataType=JSON&data=CMP_WRC&time=${today}`);
+            return { data: data };
+        } catch (err) {
+            throw new Error(err);
+        }
+    },
+    // 시도별 미세먼지 데이터 정보
+    getSidoDustForecast: async (local) => {
+        console.log(local);
+        try {
+            // http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?sidoName=서울&pageNo=1&numOfRows=100&returnType=xml&serviceKey=서비스키&ver=1.0
+            console.log(`${config.dustUrl}${config.sidoDustForecast}sidoName=서울&pageNo=1&numOfRows=100&returnType=xml&serviceKey=${config.keys.encodingKey}&ver=1.3`)
+            const data = await axios.get('/api' + `${config.dustUrl}${config.sidoDustForecast}sidoName=서울&pageNo=1&numOfRows=100&returnType=json&serviceKey=${config.keys.encodingKey}&ver=1.3`)
             return { data: data };
         } catch (err) {
             throw new Error(err);

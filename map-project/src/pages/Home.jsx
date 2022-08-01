@@ -10,6 +10,9 @@ import localImage from "../asset/images/icon_location.gif";
 import rainImage from "../asset/images/icon_rain.gif";
 import sunriseImage from "../asset/images/icon_sunrise.png";
 import sunsetImage from "../asset/images/icon_sunset.png";
+import dustImage from "../asset/images/icon_dust.png";
+import ultraDustImage from "../asset/images/icon_ultra_dust.png";
+import infoImage from "../asset/images/icon_info.png";
 import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.min.css';
 import 'swiper/components/navigation/navigation.min.css';
@@ -27,10 +30,10 @@ const Day = new DayHelper();
 const yoil = Day.getYoil();
 const hour = Day.get24Hour();
 const min = Day.getMin()
+const today = Day.getDay();
 
 const Home = () => {
-    const [radarHour, setRadarHour] = useState(null);
-    const [isRenderingRadarImage, setIsRenderingRadarImage] = useState(false);
+    const [isInfoOpen, setIsInfoOpen] = useState(false)
     // pagination use
     SwiperCore.use([Pagination])
 
@@ -50,11 +53,6 @@ const Home = () => {
     //Refs
     const temperatureAndWeatherSubtitle = useRef();
 
-    // console.log(radarData)
-
-    React.useEffect(() => {
-        console.log(radarHour)
-    }, [radarHour])
 
     return (
         <article className={styles.article_container}>
@@ -270,13 +268,48 @@ const Home = () => {
                     </div>
                 </div>}
 
+                {/* 미세먼지 초미세먼지 */}
+                <div className={styles.weather_title}>
+                    <h1>미세먼지·초미세먼지</h1>
+                    <span style={{ margin: "0px 5px" }}>|</span>
+                    <span style={{ marginRight: "10px" }}>{local ? local.region_1depth_name : "-"} 기준</span>
+                    <img onClick={() => {
+                        setIsInfoOpen(!isInfoOpen)
+                    }} src={infoImage} alt="미세먼지 안내" width={20} height={20} />
+                </div>
+                <div onClick={() => {
+                    setIsInfoOpen(!isInfoOpen)
+                }}>
+                    {isInfoOpen && <div className={styles.weekly_weather_wrapper} style={{ fontSize: "15px" }}>
+                        ※ 데이터 오류 가능성: "데이터는 실시간 관측된 자료이며 측정소 현지 사정이나 데이터의 수신상태에 따라 미수신 될 수 있음
+                        <br />
+                        ※ 출처: "환경부/한국환경공단"
+                    </div>}
+                </div>
+
+                <div className={styles.weekly_weather_wrapper} style={{ display: "flex", flexDirection: "row", }}>
+                    <div style={{ display: "flex", width: "50%", justifyContent: "center", alignItems: "center", flexDirection: "column", }}>
+                        <img src={dustImage} alt="초미세먼지" width={55} height={55} />
+                        <span>19㎍/㎥</span>
+                        <span>좋음</span>
+                    </div>
+                    <div style={{ border: "1px solid #dddddd" }}></div>
+                    <div style={{ display: "flex", width: "50%", justifyContent: "center", alignItems: "center", flexDirection: "column", }}>
+                        <img src={ultraDustImage} alt="초미세먼지" width={60} height={60} />
+                        <span>19㎍/㎥</span>
+                        <span>좋음</span>
+                    </div>
+                </div>
+
+
+
                 <div className={styles.weather_title}>
                     <h1>레이더 영상</h1>
                     <span style={{ margin: "0px 5px" }}>|</span>
                     <span >{hour}:00 기준</span>
                 </div>
                 {radarData && <div className={styles.weekly_weather_wrapper} onClick={() => window.open('https://www.weather.go.kr/w/image/radar.do')}>
-                    <img src={`http://www.kma.go.kr/repositary/image/rdr/img/RDR_CMP_WRC_20220729${hour}00.png`} alt="레이더 영상" width={335} height={340} />
+                    <img src={`http://www.kma.go.kr/repositary/image/rdr/img/RDR_CMP_WRC_${today}${hour}00.png`} alt="레이더 영상" width={335} height={340} />
                 </div>}
             </div>
         </article >

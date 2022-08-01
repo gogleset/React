@@ -87,6 +87,7 @@ function App() {
       }).catch((rej) => {
         dispatch(changeWeeklyTemperatureForecastValue({ data: null, status: 400, err: "NO" }));
       });
+      GetWeatherAPI.getSidoDustForecast(local.region_1depth_name).then((res) => { console.log(res) })
     }
 
   }, [local])
