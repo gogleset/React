@@ -67,7 +67,7 @@ const HomeDust = () => {
                     <img src={dustImage} alt="미세먼지" width={55} height={55} />
                     {/* 미세먼지 Pm10데이터 */}
                     {filterData.data && <span>{filterData.data[0].pm10Value ? filterData.data[0].pm10Value : "-"}㎍/㎥</span>}
-                    {filterData.data && <span>{filterData.data[0].pm10Grade === "1" ?
+                    {filterData.data && <span style={{ fontSize: "12px", margin: "2px 0px" }}>{filterData.data[0].pm10Grade === "1" ?
                         "좋음" : filterData.data[0].pm10Grade === "2" ? "보통" : filterData.data[0].pm10Grade === "3" ? "나쁨" : filterData.data[0].pm25Grade === "4" ? "매우나쁨" : "자료없음"
                     }</span>}
                 </div>
@@ -75,7 +75,7 @@ const HomeDust = () => {
                 <div style={{ display: "flex", width: "50%", justifyContent: "center", alignItems: "center", flexDirection: "column", }}>
                     <img src={ultraDustImage} alt="초미세먼지" width={60} height={60} />
                     {filterData.data && <span>{filterData.data[0].pm25Value ? filterData.data[0].pm25Value : "-"}㎍/㎥</span>}
-                    {filterData.data && <span>{filterData.data[0].pm25Grade === "1" ?
+                    {filterData.data && <span style={{ fontSize: "12px", margin: "2px 0px" }}>{filterData.data[0].pm25Grade === "1" ?
                         "좋음" : filterData.data[0].pm25Grade === "2" ? "보통" : filterData.data[0].pm25Grade === "3" ? "나쁨" : filterData.data[0].pm25Grade === "4" ? "매우나쁨" : "-"
                     }</span>}
                 </div>
