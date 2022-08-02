@@ -11,6 +11,7 @@ import { changeSunriseForecastValue } from "./Data/Store/Slice/sunriseForecastSl
 import {
   changeradarForecastValue
 } from "./Data/Store/Slice/radarForecastSlice.js";
+import { changeDustForecastValue } from './Data/Store/Slice/dustForecast.js';
 import { changeBreakForecastValue, changeFastForecastValue } from './Data/Store/Slice/breakFastForecastSlice.js';
 import { getCurrentLocation, dfs_xy_conv } from './Helper/GeolocationHelper.js';
 import GetWeatherAPI from "./Data/API/GetWeatherAPI.js";
@@ -89,8 +90,14 @@ function App() {
         dispatch(changeWeeklyTemperatureForecastValue({ data: null, status: 400, err: "NO" }));
       });
       // 미세먼지
-      // GetWeatherAPI.getSidoDustForecast(local.region_1depth_name).then((res) => { console.log(res) })
-      // 
+      // changeDustForecastValue
+      GetWeatherAPI.getSidoDustForecast(local.region_1depth_name).then((res) => {
+        console.log(res)
+        dispatch(changeDustForecastValue({ data: res.data.data.response.body.items, status: res.data.status, err: res.data.statusText }));
+      }).catch((rej) => {
+        dispatch(changeDustForecastValue({ data: null, status: 400, err: "NO" }));
+      });
+
       // 특보
       GetWeatherAPI.getBreakForecast(local.region_1depth_name).then((res) => {
         dispatch(changeBreakForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));

@@ -34,7 +34,7 @@ function getWeeklyLandCode(local) {
     console.log("getWeeklyLandCode ::: " + local)
     let localString = local;
     return ((/(서울|인천|경기)/).test(localString)) ? `11B00000` :
-        ((/(대전|세종|충남|충청남도)/).test(localString)) ? `11C20000` :
+        ((/(대전|세종|충남|충청남도|세종특별자치시)/).test(localString)) ? `11C20000` :
             ((/(충북|충청북도)/).test(localString)) ? `11C10000` :
                 ((/(광주|전라남도|전남)/).test(localString)) ? `11F20000` :
                     ((/(전북|전라북도)/).test(localString)) ? `11F10000` :
@@ -46,10 +46,16 @@ function getWeeklyLandCode(local) {
 // 중기기온코드를 리턴하는 함수
 function getWeeklyTemperatureForecastCode(local) {
     // depth1 추출(시군구)
-    const depth1 = local.slice(0, local.indexOf(" "))
+    console.log("getWeeklyTemperatureForecastCode :::" + local);
+    let depth1 = local.slice(0, local.indexOf(" ")).trim();
+    console.log(depth1);
+    if (depth1 === "세종특별자치시") {
+        depth1 = "세종"
+    }
+    console.log(depth1);
     // 도시명 찾기
     const filtering = weeklyTemperatureCodeData.filter((v) => {
-        return local.indexOf(v.city) > -1
+        return depth1.indexOf(v.city) > -1
     })
     let filters = null;
     filtering.forEach((v) => {
@@ -86,6 +92,7 @@ function getBreakFastForecastCode(local) {
             case "전북":
                 return 146;
             case "대전":
+            case "세종특별자치시":
             case "세종":
             case "충남":
                 return 133;

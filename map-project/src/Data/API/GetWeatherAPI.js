@@ -13,6 +13,7 @@ const minute = Day.getMinute(); //현재
 export default {
     // 오늘데이터를 가져옵니다.
     getTodayForcast: async (nx, ny) => {
+        console.log('/api' + `${config.weatherUrls}${config.todayForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=865&dataType=JSON&base_date=${Number(hour) < 3 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${Number(hour) < 3 ? "2300" : "0200"}&nx=${nx}&ny=${ny}`)
         try {
             const data = await axios.get('/api' + `${config.weatherUrls}${config.todayForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=865&dataType=JSON&base_date=${Number(hour) < 3 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${Number(hour) < 3 ? "2300" : "0200"}&nx=${nx}&ny=${ny}`);
             // console.log(data);
@@ -29,9 +30,8 @@ export default {
         } else {
             forecastMinutes = "30";
         }
-        // console.log(forecastMinutes);
         try {
-            const data = await axios.get('/api' + `${config.weatherUrls}${config.liveForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=60&dataType=JSON&base_date=${(Number(hour)) === 24 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${serverHour}${forecastMinutes}&nx=${nx}&ny=${ny}`);
+            const data = await axios.get('/api' + `${config.weatherUrls}${config.liveForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=60&dataType=JSON&base_date=${(Number(hour)) === 24 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${(Number(hour)) === 24 ? "23" : serverHour}${forecastMinutes}&nx=${nx}&ny=${ny}`);
             // console.log("try");
             // console.log(data);
             return { data: data };
@@ -45,7 +45,7 @@ export default {
         const weeklyLandCode = getWeeklyLandCode(local)
         //local은 지역명이 들어있어야한다.
         try {
-            console.log('/api' + `${config.weeklyLandUrl}${config.weeklyLandForecast}serviceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=10&dataType=JSON&regId=${weeklyLandCode}&tmFc=${Number(hour) < 8 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}0600`);
+            // console.log('/api' + `${config.weeklyLandUrl}${config.weeklyLandForecast}serviceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=10&dataType=JSON&regId=${weeklyLandCode}&tmFc=${Number(hour) < 8 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}0600`);
             const data = await axios.get('/api' + `${config.weeklyLandUrl}${config.weeklyLandForecast}serviceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=10&dataType=JSON&regId=${weeklyLandCode}&tmFc=${Number(hour) < 8 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}0600`);
             return { data: data };
         } catch (err) {
@@ -57,6 +57,7 @@ export default {
         console.log(local);
         // 지역code 가져오기
         const weeklyTemperatureCode = getWeeklyTemperatureForecastCode(local)
+        console.log(weeklyTemperatureCode)
         //local은 지역명이 들어있어야한다.
         try {
             // console.log('/api' + `${config.weeklyTemperatureUrl}${config.weeklyTemperatureForecast}serviceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=10&dataType=JSON&regId=${weeklyTemperatureCode}&tmFc=${Number(hour) < 8 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}0600`);
@@ -88,10 +89,16 @@ export default {
     },
     // 시도별 미세먼지 데이터 정보
     getSidoDustForecast: async (local) => {
-        console.log(local);
+        let locals = local.trim();
+        if (locals === "제주특별자치도") {
+            locals = "제주"
+        } else if(locals === "세종특별자치시"){
+            locals = "세종"
+        }
         try {
-            console.log(`${config.dustUrl}${config.sidoDustForecast}sidoName=서울&pageNo=1&numOfRows=100&returnType=xml&serviceKey=${config.keys.encodingKey}&ver=1.3`)
-            const data = await axios.get('/api' + `${config.dustUrl}${config.sidoDustForecast}sidoName=서울&pageNo=1&numOfRows=100&returnType=json&serviceKey=${config.keys.encodingKey}&ver=1.3`)
+            console.log(`${config.dustUrl}${config.sidoDustForecast}sidoName=${locals}&pageNo=1&numOfRows=100&returnType=xml&serviceKey=${config.keys.encodingKey}&ver=1.3`)
+            const data = await axios.get('/api' + `${config.dustUrl}${config.sidoDustForecast}sidoName=${locals}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${config.keys.encodingKey}&ver=1.3`)
+            // console.log(data)
             return { data: data };
         } catch (err) {
             throw new Error(err);

@@ -29,16 +29,16 @@ const HomeNews = () => {
                         height: "90px", marginBottom: "25px"
                     }}
                     autoplay={{
-                        delay: 5000,
-                        disableOnInteraction: false,
+                        delay: 8000,
+                        disableOnInteraction: true,
                     }}
                 >
                     {breakData.map((item, index) => {
                         return (
-                            <SwiperSlide style={{ height: "auto", display: 'flex', flexDirection: "column", textAlign: "center" }} key={index}>
+                            <SwiperSlide style={{ height: "auto", display: 'flex', flexDirection: "column", textAlign: "center", alignItems: "center"}} key={index}>
                                 {/* 특보현황 box */}
                                 <span style={{ color: "rgb(209 106 158)" }}>{item.t1}</span>
-                                <span style={{ fontSize: "14px", margin: "10px 0px" }}>{item.t2.slice(4).trim()}</span>
+                                <span className="news_text">{item.t2.slice(4).trim()}</span>
                                 <span style={{ fontSize: "9px" }}>{item.t3.slice(item.t3.indexOf("년") + 1).trim()}</span>
                             </SwiperSlide>
                         )

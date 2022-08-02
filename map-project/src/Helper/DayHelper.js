@@ -58,11 +58,11 @@ export default class date {
         let now = dayjs();
         now.format();
         let hour = String(now.$H - 1);
-        if (hour.length === 1) {
-            hour = "0" + hour;
-        }
         if (hour === "-1") {
             hour = 23;
+        }
+        if (hour.length === 1) {
+            hour = "0" + hour;
         }
         return `${hour}`
     };
