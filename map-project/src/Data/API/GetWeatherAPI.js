@@ -10,7 +10,7 @@ const hour = Day.get24Hour();
 const minute = Day.getMinute(); //현재 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default {
+export const getWeatherApi = {
     // 오늘데이터를 가져옵니다.
     getTodayForcast: async (nx, ny) => {
         console.log('/api' + `${config.weatherUrls}${config.todayForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=865&dataType=JSON&base_date=${Number(hour) < 3 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${Number(hour) < 3 ? "2300" : "0200"}&nx=${nx}&ny=${ny}`)
@@ -92,7 +92,7 @@ export default {
         let locals = local.trim();
         if (locals === "제주특별자치도") {
             locals = "제주"
-        } else if(locals === "세종특별자치시"){
+        } else if (locals === "세종특별자치시") {
             locals = "세종"
         }
         try {
@@ -126,23 +126,7 @@ export default {
     },
     // http://apis.data.go.kr/1360000/WthrWrnInfoService/getWthrBrkNews?serviceKey=인증키&numOfRows=10&pageNo=1&stnId=108&fromTmFc=20170607&toTmFc=20170607
 
-    // 현재위치 기반 동네 주소 가져오기
-    getAddress: async (latitude, longitude) => {
-        // console.log(latitude, longitude);
-        try {
-            const result = await axios.get(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${longitude}&y=${latitude}&input_coord=WGS84`, {
-                headers: { 'Authorization': `KakaoAK ${config.keys.kakaoRestKey}` }
-            });
-
-            return {
-                status: result.status,
-                statusText: result.statusText,
-                data: result.data.documents[0].address,
-            }
-        } catch (err) {
-            return err;
-        }
-    }
+    
 
     // getNews: async () => {
     //     try{

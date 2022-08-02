@@ -23,8 +23,7 @@ const HomeSunRiseSet = () => {
                         {sunriseData.sunrise.slice(0, 2)}:{sunriseData.sunrise.slice(2)}
                     </span>
                 </div>
-                <div style={{ border: "1px solid #dddddd" }}>
-                </div>
+                <div style={{ border: "1px solid #dddddd", backgroundColor: "#dddddd" }}></div>
                 <div style={{ display: 'flex', flexDirection: "column", width: "49%", alignItems: "center" }}>
                     <img src={sunsetImage} alt="일몰" width={60} height={60} />
                     <span style={{ marginTop: "10px" }}>

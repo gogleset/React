@@ -57,9 +57,9 @@ const HomeDust = () => {
                 setIsInfoOpen(!isInfoOpen)
             }}>
                 {isInfoOpen && <div className={styles.weekly_weather_wrapper} style={{ fontSize: "15px", marginBottom: "10px" }}>
-                    ※ 데이터 오류 가능성: "데이터는 실시간 관측된 자료이며 측정소 현지 사정이나 데이터의 수신상태에 따라 미수신 될 수 있음
+                    ※ 데이터 오류 가능성: 데이터는 실시간 관측된 자료이며 측정소 현지 사정이나 데이터의 수신상태에 따라 미수신 될 수 있음
                     <br />
-                    ※ 출처: "환경부/한국환경공단"
+                    ※ 출처: 환경부/한국환경공단
                 </div>}
             </div>
             <div className={styles.weekly_weather_wrapper} style={{ display: "flex", flexDirection: "row", }}>
@@ -71,7 +71,7 @@ const HomeDust = () => {
                         "좋음" : filterData.data[0].pm10Grade === "2" ? "보통" : filterData.data[0].pm10Grade === "3" ? "나쁨" : filterData.data[0].pm25Grade === "4" ? "매우나쁨" : "자료없음"
                     }</span>}
                 </div>
-                <div style={{ border: "1px solid #dddddd" }}></div>
+                <div style={{ border: "1px solid #dddddd", backgroundColor: "#dddddd"}}></div>
                 <div style={{ display: "flex", width: "50%", justifyContent: "center", alignItems: "center", flexDirection: "column", }}>
                     <img src={ultraDustImage} alt="초미세먼지" width={60} height={60} />
                     {filterData.data && <span>{filterData.data[0].pm25Value ? filterData.data[0].pm25Value : "-"}㎍/㎥</span>}

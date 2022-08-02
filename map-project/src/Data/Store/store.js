@@ -8,6 +8,7 @@ import sunriseForecastSlice from './Slice/sunriseForecastSlice.js';
 import radarForecastSlice from './Slice/radarForecastSlice.js';
 import breakFastForecastSlice from './Slice/breakFastForecastSlice.js';
 import dustForecastSlice from './Slice/dustForecast.js';
+import videoSlice from './Slice/videoSlice.js'
 
 
 // Slice 오브젝트 참조 구문 명시 위치
@@ -23,7 +24,8 @@ const store = configureStore({
         sunriseForecast: sunriseForecastSlice,
         radarForecast: radarForecastSlice,
         breakFastForecast: breakFastForecastSlice,
-        dustForecast:dustForecastSlice,
+        dustForecast: dustForecastSlice,
+        video: videoSlice,
     },
 
     // 미들웨어를 사용하지 않을 경우 이 라인 생략가능

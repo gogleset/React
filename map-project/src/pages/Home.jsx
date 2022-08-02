@@ -16,6 +16,7 @@ import HomeSunRiseSet from "../components/HomeBox/HomeSunRiseSet.jsx";
 import HomeDust from "../components/HomeBox/HomeDust.jsx";
 import HomeRadar from "../components/HomeBox/HomeRadar.jsx";
 import HomeNews from "../components/HomeBox/HomeNews.jsx";
+import HomeVideo from "../components/HomeBox/HomeVideoBox.jsx";
 
 const Home = () => {
 
@@ -41,6 +42,9 @@ const Home = () => {
 
                 {/* 레이더 영상 */}
                 <HomeRadar />
+
+                {/* 오늘 비와? */}
+                <HomeVideo />
             </div>
         </article >
     );

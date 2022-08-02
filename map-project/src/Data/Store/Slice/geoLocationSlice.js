@@ -6,6 +6,8 @@ const initialState = {
     latitude: null,
     longitude: null,
     local: null,
+    localErr: null,
+    localStatus: null,
 };
 
 const geoLocationSlice = createSlice({
@@ -18,8 +20,10 @@ const geoLocationSlice = createSlice({
             state.latitude = action.payload.latitude;
             state.longitude = action.payload.longitude;
         },
-        changeLocalValue(state, action){
+        changeLocalValue(state, action) {
             state.local = action.payload.data;
+            state.localErr = action.payload.err;
+            state.localStatus = action.payload.status;
         }
     }
 });
