@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import DayHelper from "../../../Helper/DayHelper.js";
+import DayHelper from "../../../helper/DayHelper.js";
 import dayjs from "dayjs";
 
 const Day = new DayHelper();

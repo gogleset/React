@@ -3,20 +3,20 @@ import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 
 // data, apis
-import { changeLocationValue, changeLocalValue } from "./Data/Store/Slice/geoLocationSlice.js";
-import { changeLiveForecastValue } from "./Data/Store/Slice/liveForecastSlice.js"
-import { changeTodayForecastValue } from "./Data/Store/Slice/todayForecastSlice";
-import { changeWeeklyLandForecastValue, changeWeeklyTemperatureForecastValue } from "./Data/Store/Slice/weeklyForcastSlice";
-import { changeSunriseForecastValue } from "./Data/Store/Slice/sunriseForecastSlice.js"
+import { changeLocationValue, changeLocalValue } from "./data/Store/Slice/geoLocationSlice.js";
+import { changeLiveForecastValue } from "./data/Store/Slice/liveForecastSlice.js"
+import { changeTodayForecastValue } from "./data/Store/Slice/todayForecastSlice";
+import { changeWeeklyLandForecastValue, changeWeeklyTemperatureForecastValue } from "./data/Store/Slice/weeklyForcastSlice";
+import { changeSunriseForecastValue } from "./data/Store/Slice/sunriseForecastSlice.js"
 import {
   changeradarForecastValue
-} from "./Data/Store/Slice/radarForecastSlice.js";
-import { changeDustForecastValue } from './Data/Store/Slice/dustForecast.js';
-import { changeBreakForecastValue, changeFastForecastValue } from './Data/Store/Slice/breakFastForecastSlice.js';
-import { changeVideoValue } from './Data/Store/Slice/videoSlice.js';
-import { getCurrentLocation, dfs_xy_conv } from './Helper/GeolocationHelper.js';
-import { getWeatherApi } from "./Data/API/GetWeatherAPI";
-import { getKaKaoApi } from "./Data/API/GetKakaoApi";
+} from "./data/Store/Slice/radarForecastSlice.js";
+import { changeDustForecastValue } from './data/Store/Slice/dustForecast.js';
+import { changeBreakForecastValue, changeFastForecastValue } from './data/Store/Slice/breakFastForecastSlice.js';
+import { changeVideoValue } from './data/Store/Slice/videoSlice.js';
+import { getCurrentLocation, dfs_xy_conv } from './helper/GeolocationHelper.js';
+import { getWeatherApi } from "./data/API/GetWeatherAPI";
+import { getKaKaoApi } from "./data/API/GetKakaoApi";
 
 // styles
 import "./styles/App.scss";
@@ -66,8 +66,6 @@ function App() {
         console.log(res.data.data.documents)
         dispatch(changeVideoValue({ data: res.data.data.documents, status: res.data.status, err: res.data.statusText }))
       })
-      // .then(res => dispatch(changeVideoValue(res)))
-      // .catch(rej => alert("주소값을 가져오지 못했습니다."));
       // 일출, 일몰
       getWeatherApi.getSunriseForecast(latitude, longitude).then((res) => {
         console.log(res);
