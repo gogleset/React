@@ -31,6 +31,53 @@ function App() {
   const { err, latitude, longitude, local } = useSelector((state) => state.geoLocation);
   const dispatch = useDispatch();
 
+  function dispatchWeatherNxApiData(nx, ny, latitude, longitude) {
+    if (nx === null || ny === null || latitude === null || longitude === null) {
+      console.log(`nx ::: ${nx} ny ::: ${ny} latitude ::: ${latitude} longitude ::: ${longitude}`)
+      return alert("파라미터를 확인해주세요")
+    }
+    getWeatherApi.getTodayForcast(nx, ny).then(res => {
+      dispatch(changeTodayForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
+    }).catch((rej) => {
+      dispatch(changeTodayForecastValue({ data: null, status: 400, err: "NO" }));
+    });
+    // 초단기예보
+    getWeatherApi.getLiveForecast(nx, ny).then((res) => {
+      dispatch(changeLiveForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
+    }).catch((rej) => {
+      dispatch(changeLiveForecastValue({ data: null, status: 400, err: "NO" }));
+    });
+    // 주소값 구하기
+    getKaKaoApi.getAddress(latitude, longitude).then((res) => {
+      console.log(res);
+      dispatch(changeLocalValue({ err: res.statusText, data: res.data, status: res.status }))
+    }).catch((rej) => {
+      dispatch(changeLocalValue({ err: rej.statusText, data: null, status: rej.status }))
+      alert("주소값을 가져오지 못했습니다.")
+    });
+    // 오늘 날씨 비디오 가져오기 changeVideoValue
+    getKaKaoApi.getVideo(latitude, longitude).then(res => {
+      console.log(res.data.data.documents)
+      dispatch(changeVideoValue({ data: res.data.data.documents, status: res.data.status, err: res.data.statusText }))
+    })
+    // .then(res => dispatch(changeVideoValue(res)))
+    // .catch(rej => alert("주소값을 가져오지 못했습니다."));
+    // 일출, 일몰
+    getWeatherApi.getSunriseForecast(latitude, longitude).then((res) => {
+      console.log(res);
+      dispatch(changeSunriseForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
+    }).catch((rej) => {
+      dispatch(changeSunriseForecastValue({ data: null, status: 400, err: "NO" }));
+    });
+    // 레이더
+    getWeatherApi.getRadarForecast().then((res) => {
+      console.log(res);
+      dispatch(changeradarForecastValue({ data: res.data.data.response.body.items.item[0]["rdr-img-file"], status: res.data.status, err: res.data.statusText }));
+    }).catch((rej) => {
+      dispatch(changeradarForecastValue({ data: null, status: 400, err: "NO" }));
+    });
+  }
+
   useEffect(() => {
     // local값이 없다면 위치정보를 가져옵니다.
     if (local === null) {
@@ -42,46 +89,9 @@ function App() {
     if (err === 0) {
       const { nx, ny } = dfs_xy_conv("toXY", latitude, longitude);
       // 오늘 기상
-      getWeatherApi.getTodayForcast(nx, ny).then(res => {
-        dispatch(changeTodayForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
-      }).catch((rej) => {
-        dispatch(changeTodayForecastValue({ data: null, status: 400, err: "NO" }));
-      });
-      // 초단기예보
-      getWeatherApi.getLiveForecast(nx, ny).then((res) => {
-        dispatch(changeLiveForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
-      }).catch((rej) => {
-        dispatch(changeLiveForecastValue({ data: null, status: 400, err: "NO" }));
-      });
-      // 주소값 구하기
-      getKaKaoApi.getAddress(latitude, longitude).then((res) => {
-        console.log(res);
-        dispatch(changeLocalValue({ err: res.statusText, data: res.data, status: res.status }))
-      }).catch((rej) => {
-        dispatch(changeLocalValue({ err: rej.statusText, data: null, status: rej.status }))
-        alert("주소값을 가져오지 못했습니다.")
-      });
-      // 오늘 날씨 비디오 가져오기 changeVideoValue
-      getKaKaoApi.getVideo(latitude, longitude).then(res => {
-        console.log(res.data.data.documents)
-        dispatch(changeVideoValue({ data: res.data.data.documents, status: res.data.status, err: res.data.statusText }))
-      })
-      // .then(res => dispatch(changeVideoValue(res)))
-      // .catch(rej => alert("주소값을 가져오지 못했습니다."));
-      // 일출, 일몰
-      getWeatherApi.getSunriseForecast(latitude, longitude).then((res) => {
-        console.log(res);
-        dispatch(changeSunriseForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
-      }).catch((rej) => {
-        dispatch(changeSunriseForecastValue({ data: null, status: 400, err: "NO" }));
-      });
-      // 레이더
-      getWeatherApi.getRadarForecast().then((res) => {
-        console.log(res);
-        dispatch(changeradarForecastValue({ data: res.data.data.response.body.items.item[0]["rdr-img-file"], status: res.data.status, err: res.data.statusText }));
-      }).catch((rej) => {
-        dispatch(changeradarForecastValue({ data: null, status: 400, err: "NO" }));
-      });
+      dispatchWeatherNxApiData(nx, ny, latitude, longitude);
+    } else if(err === -1){
+      dispatchWeatherNxApiData(60, 127, 37.565717, 126.977794);
     }
   }, [err]);
 

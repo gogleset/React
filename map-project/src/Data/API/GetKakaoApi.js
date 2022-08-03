@@ -6,10 +6,9 @@ export const getKaKaoApi = {
     getVideo: async () => {
         // console.log(latitude, longitude);
         try {
-            const result = await axios.get(`https://dapi.kakao.com/v2/search/vclip?sort=recency&size=3&query=오늘비와?날씨`, {
+            const result = await axios.get(`https://dapi.kakao.com/v2/search/vclip?sort=recency&size=5&query=오늘의날씨`, {
                 headers: { 'Authorization': `KakaoAK ${config.keys.kakaoRestKey}` }
             });
-            console.log(result)
             return { data: result }
         } catch (err) {
             throw new Error(err)
