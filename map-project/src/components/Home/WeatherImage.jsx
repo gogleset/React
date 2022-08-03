@@ -125,6 +125,8 @@ function printClassificationWeather(sky, precipitation, time, width, height) {
                 return (<img src={snowImage} alt="밤 날씨 비와 눈" width={width} height={height} />)
             case 3:
                 return (<img src={snowImage} alt="밤 날씨 눈" width={width} height={height} />)
+            case 4:
+                return (<img src={rainImage} alt="밤 날씨 소나기" width={width} height={height} />)
             case 5:
                 return (<img src={rainImage} alt="밤 날씨 빗방울" width={width} height={height} />)
             case 6:
