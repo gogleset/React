@@ -26,7 +26,7 @@ const HomeNews = () => {
                     modules={[Pagination, Autoplay]}
                     // onSlideChange={(e) => console.log(e)}
                     style={{
-                        height: "90px", marginBottom: "25px"
+                        height: "100px", marginBottom: "25px"
                     }}
                     autoplay={{
                         delay: 8000,
@@ -35,7 +35,7 @@ const HomeNews = () => {
                 >
                     {breakData.map((item, index) => {
                         return (
-                            <SwiperSlide style={{ height: "auto", display: 'flex', flexDirection: "column", textAlign: "center", alignItems: "center"}} key={index}>
+                            <SwiperSlide style={{ height: "auto", display: 'flex', flexDirection: "column", textAlign: "center", alignItems: "center" }} key={index}>
                                 {/* 특보현황 box */}
                                 <span style={{ color: "rgb(209 106 158)" }}>{item.t1}</span>
                                 <span className="news_text">{item.t2.slice(4).trim()}</span>

@@ -8,11 +8,12 @@
 }
 .news_text{
     width: 90%;
-    height: 70px;
+    height: 28px;
     font-size: 14px;
     margin: 10px 0px;
     white-space: normal;
     word-break: break-word;
+    overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp:2;
     -webkit-box-orient: vertical;
