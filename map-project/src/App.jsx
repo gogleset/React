@@ -6,7 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import { changeLocationValue, changeLocalValue } from "./Data/Store/Slice/geoLocationSlice.js";
 import { changeLiveForecastValue } from "./Data/Store/Slice/liveForecastSlice.js"
 import { changeTodayForecastValue } from "./Data/Store/Slice/todayForecastSlice";
-import { changeWeeklyLandForecastValue, changeWeeklyTemperatureForecastValue } from "./Data/Store/Slice/weeklyForcastSlice";
+import { changeWeeklyLandForecastValue, changeWeeklyTemperatureForecastValue } from "./Data/Store/Slice/weeklyForecastSlice";
 import { changeSunriseForecastValue } from "./Data/Store/Slice/sunriseForecastSlice.js"
 import {
   changeradarForecastValue
@@ -36,7 +36,7 @@ function App() {
       // console.log(`nx ::: ${nx} ny ::: ${ny} latitude ::: ${latitude} longitude ::: ${longitude}`)
       return alert("파라미터를 확인해주세요")
     }
-    getWeatherApi.getTodayForcast(nx, ny).then(res => {
+    getWeatherApi.getTodayForecast(nx, ny).then(res => {
       dispatch(changeTodayForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
     }).catch((rej) => {
       dispatch(changeTodayForecastValue({ data: null, status: 400, err: "NO" }));

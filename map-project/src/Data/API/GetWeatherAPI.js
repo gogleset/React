@@ -12,10 +12,11 @@ const minute = Day.getMinute(); //현재
 // eslint-disable-next-line import/no-anonymous-default-export
 export const getWeatherApi = {
     // 오늘데이터를 가져옵니다.
-    getTodayForcast: async (nx, ny) => {
+    getTodayForecast: async (nx, ny) => {
+        const time = Day.getTodayForecastTime();
         // console.log('/api' + `${config.weatherUrls}${config.todayForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=865&dataType=JSON&base_date=${Number(hour) < 3 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${Number(hour) < 3 ? "2300" : "0200"}&nx=${nx}&ny=${ny}`)
         try {
-            const data = await axios.get('/api' + `${config.weatherUrls}${config.todayForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=865&dataType=JSON&base_date=${Number(hour) < 3 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${Number(hour) < 3 ? "2300" : "0200"}&nx=${nx}&ny=${ny}`);
+            const data = await axios.get('/api' + `${config.weatherUrls}${config.todayForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=865&dataType=JSON&base_date=${Number(hour) < 3 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${time}&nx=${nx}&ny=${ny}`);
             // console.log(data);
             return { data: data };
         } catch (err) {

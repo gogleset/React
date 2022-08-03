@@ -3,7 +3,7 @@ import { createLogger } from 'redux-logger';
 import geoLocationSlice from './Slice/geoLocationSlice.js';
 import liveForecastSlice from './Slice/liveForecastSlice.js';
 import todayForecastSlice from './Slice/todayForecastSlice.js';
-import weeklyForecastSlice from './Slice/weeklyForcastSlice.js';
+import weeklyForecastSlice from './Slice/weeklyForecastSlice.js';
 import sunriseForecastSlice from './Slice/sunriseForecastSlice.js';
 import radarForecastSlice from './Slice/radarForecastSlice.js';
 import breakFastForecastSlice from './Slice/breakFastForecastSlice.js';
