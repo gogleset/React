@@ -33,7 +33,7 @@ function App() {
 
   function dispatchWeatherNxApiData(nx, ny, latitude, longitude) {
     if (nx === null || ny === null || latitude === null || longitude === null) {
-      console.log(`nx ::: ${nx} ny ::: ${ny} latitude ::: ${latitude} longitude ::: ${longitude}`)
+      // console.log(`nx ::: ${nx} ny ::: ${ny} latitude ::: ${latitude} longitude ::: ${longitude}`)
       return alert("파라미터를 확인해주세요")
     }
     getWeatherApi.getTodayForcast(nx, ny).then(res => {
@@ -49,7 +49,7 @@ function App() {
     });
     // 주소값 구하기
     getKaKaoApi.getAddress(latitude, longitude).then((res) => {
-      console.log(res);
+      // console.log(res);
       dispatch(changeLocalValue({ err: res.statusText, data: res.data, status: res.status }))
     }).catch((rej) => {
       dispatch(changeLocalValue({ err: rej.statusText, data: null, status: rej.status }))
@@ -57,21 +57,21 @@ function App() {
     });
     // 오늘 날씨 비디오 가져오기 changeVideoValue
     getKaKaoApi.getVideo(latitude, longitude).then(res => {
-      console.log(res.data.data.documents)
+      // console.log(res.data.data.documents)
       dispatch(changeVideoValue({ data: res.data.data.documents, status: res.data.status, err: res.data.statusText }))
     })
     // .then(res => dispatch(changeVideoValue(res)))
     // .catch(rej => alert("주소값을 가져오지 못했습니다."));
     // 일출, 일몰
     getWeatherApi.getSunriseForecast(latitude, longitude).then((res) => {
-      console.log(res);
+      // console.log(res);
       dispatch(changeSunriseForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
     }).catch((rej) => {
       dispatch(changeSunriseForecastValue({ data: null, status: 400, err: "NO" }));
     });
     // 레이더
     getWeatherApi.getRadarForecast().then((res) => {
-      console.log(res);
+      // console.log(res);
       dispatch(changeradarForecastValue({ data: res.data.data.response.body.items.item[0]["rdr-img-file"], status: res.data.status, err: res.data.statusText }));
     }).catch((rej) => {
       dispatch(changeradarForecastValue({ data: null, status: 400, err: "NO" }));
@@ -112,7 +112,7 @@ function App() {
       // 미세먼지
       // changeDustForecastValue
       getWeatherApi.getSidoDustForecast(local.region_1depth_name).then((res) => {
-        console.log(res)
+        // console.log(res)
         dispatch(changeDustForecastValue({ data: res.data.data.response.body.items, status: res.data.status, err: res.data.statusText }));
       }).catch((rej) => {
         dispatch(changeDustForecastValue({ data: null, status: 400, err: "NO" }));
@@ -125,7 +125,7 @@ function App() {
         dispatch(changeBreakForecastValue({ data: null, status: 400, err: "NO" }));
       });
       getWeatherApi.getFastForecast(local.region_1depth_name).then((res) => {
-        console.log(res);
+        // console.log(res);
         dispatch(changeFastForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
       }).catch((rej) => {
         dispatch(changeFastForecastValue({ data: null, status: 400, err: "NO" }));

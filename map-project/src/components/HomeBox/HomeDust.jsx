@@ -27,8 +27,8 @@ const HomeDust = () => {
 
     useEffect(() => {
         if (dustData) {
-            console.log(regionDepth2);
-            console.log(regionDepth3);
+            // console.log(regionDepth2);
+            // console.log(regionDepth3);
             setFilterData((prevState) => {
                 let filterData = dustData.filter((v, i) => regionDepth2.indexOf(v.stationName) > -1);
                 if (filterData.length < 1) {
@@ -42,7 +42,7 @@ const HomeDust = () => {
         }
     }, [regionDepth2, regionDepth3, dustData])
 
-    useEffect(() => { console.log(filterData) }, [filterData])
+    // useEffect(() => { console.log(filterData) }, [filterData])
     return (
         <>
             <div className={styles.weather_title}>

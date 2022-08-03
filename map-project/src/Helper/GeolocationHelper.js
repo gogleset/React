@@ -31,7 +31,7 @@ async function getCurrentLocation() {
 
 // 중기육상지역코드를 리턴하는 함수
 function getWeeklyLandCode(local) {
-    console.log("getWeeklyLandCode ::: " + local)
+    // console.log("getWeeklyLandCode ::: " + local)
     let localString = local;
     return ((/(서울|인천|경기)/).test(localString)) ? `11B00000` :
         ((/(대전|세종|충남|충청남도|세종특별자치시)/).test(localString)) ? `11C20000` :
@@ -46,13 +46,13 @@ function getWeeklyLandCode(local) {
 // 중기기온코드를 리턴하는 함수
 function getWeeklyTemperatureForecastCode(local) {
     // depth1 추출(시군구)
-    console.log("getWeeklyTemperatureForecastCode :::" + local);
+    // console.log("getWeeklyTemperatureForecastCode :::" + local);
     let depth1 = local.slice(0, local.indexOf(" ")).trim();
-    console.log(depth1);
+    // console.log(depth1);
     if (depth1 === "세종특별자치시") {
         depth1 = "세종"
     }
-    console.log(depth1);
+    // console.log(depth1);
     // 도시명 찾기
     const filtering = weeklyTemperatureCodeData.filter((v) => {
         return depth1.indexOf(v.city) > -1
@@ -72,7 +72,7 @@ function getWeeklyTemperatureForecastCode(local) {
 
 // 기상특보속보 지점코드를 반환하는 함수
 function getBreakFastForecastCode(local) {
-    console.log(local)
+    // console.log(local)
     if (local) {
         switch (local) {
             case "서울":

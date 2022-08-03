@@ -9,7 +9,7 @@ const HomeVideoBox = () => {
 
     const { videoData } = useSelector((state) => state.video);
 
-    React.useEffect(() => { console.log(videoData) }, [videoData]);
+    // React.useEffect(() => { console.log(videoData) }, [videoData]);
     return (
         <>
             <div className={styles.weather_title}>

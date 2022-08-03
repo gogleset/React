@@ -18,9 +18,9 @@ const dustSlice = createSlice({
             state.dustErr = action.payload.err;
             state.dustData = action.payload.data;
             state.dustStatus = action.payload.status;
-            if (action.payload.data) {
-                console.log("!!")
-            }
+            // if (action.payload.data) {
+            //     console.log("!!")
+            // }
         }
     }
 });

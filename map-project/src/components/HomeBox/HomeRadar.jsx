@@ -11,7 +11,7 @@ const minute = Day.getMin();
 const today = Day.getDay();
 
 const HomeRadar = () => {
-    console.log(minute, hour)
+    // console.log(minute, hour)
     const { radarData } = useSelector((state) => state.radarForecast);
     return (
         <>

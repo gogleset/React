@@ -13,7 +13,7 @@ const minute = Day.getMinute(); //현재
 export const getWeatherApi = {
     // 오늘데이터를 가져옵니다.
     getTodayForcast: async (nx, ny) => {
-        console.log('/api' + `${config.weatherUrls}${config.todayForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=865&dataType=JSON&base_date=${Number(hour) < 3 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${Number(hour) < 3 ? "2300" : "0200"}&nx=${nx}&ny=${ny}`)
+        // console.log('/api' + `${config.weatherUrls}${config.todayForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=865&dataType=JSON&base_date=${Number(hour) < 3 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${Number(hour) < 3 ? "2300" : "0200"}&nx=${nx}&ny=${ny}`)
         try {
             const data = await axios.get('/api' + `${config.weatherUrls}${config.todayForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=865&dataType=JSON&base_date=${Number(hour) < 3 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${Number(hour) < 3 ? "2300" : "0200"}&nx=${nx}&ny=${ny}`);
             // console.log(data);
@@ -54,10 +54,10 @@ export const getWeatherApi = {
     },
     // 주간 날씨예보 기온
     getWeeklyTemperatureForecast: async (local) => {
-        console.log(local);
+        // console.log(local);
         // 지역code 가져오기
         const weeklyTemperatureCode = getWeeklyTemperatureForecastCode(local)
-        console.log(weeklyTemperatureCode)
+        // console.log(weeklyTemperatureCode)
         //local은 지역명이 들어있어야한다.
         try {
             // console.log('/api' + `${config.weeklyTemperatureUrl}${config.weeklyTemperatureForecast}serviceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=10&dataType=JSON&regId=${weeklyTemperatureCode}&tmFc=${Number(hour) < 8 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}0600`);
@@ -70,7 +70,7 @@ export const getWeatherApi = {
     },
     // 일출, 일몰정보
     getSunriseForecast: async (nx, ny) => {
-        console.log(`getSunriseForecast :::  ${nx} ,${ny}`)
+        // console.log(`getSunriseForecast :::  ${nx} ,${ny}`)
         try {
             const data = await axios.get('/api' + `${config.sunriseUrl}longitude=${ny}&latitude=${nx}&locdate=${today}&dnYn=y&ServiceKey=${config.keys.encodingKey}`);
             return { data: data };
@@ -96,7 +96,7 @@ export const getWeatherApi = {
             locals = "세종"
         }
         try {
-            console.log(`${config.dustUrl}${config.sidoDustForecast}sidoName=${locals}&pageNo=1&numOfRows=100&returnType=xml&serviceKey=${config.keys.encodingKey}&ver=1.3`)
+            // console.log(`${config.dustUrl}${config.sidoDustForecast}sidoName=${locals}&pageNo=1&numOfRows=100&returnType=xml&serviceKey=${config.keys.encodingKey}&ver=1.3`)
             const data = await axios.get('/api' + `${config.dustUrl}${config.sidoDustForecast}sidoName=${locals}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${config.keys.encodingKey}&ver=1.3`)
             // console.log(data)
             return { data: data };
