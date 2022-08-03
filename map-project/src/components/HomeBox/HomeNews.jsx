@@ -38,7 +38,7 @@ const HomeNews = () => {
                             <SwiperSlide style={{ height: "auto", display: 'flex', flexDirection: "column", textAlign: "center", alignItems: "center" }} key={index}>
                                 {/* 특보현황 box */}
                                 <span style={{ color: "rgb(209 106 158)" }}>{item.t1}</span>
-                                <span className="news_text">{item.t2.slice(4).trim()}</span>
+                                <span className="news_text" onClick={() => window.open("https://www.weather.go.kr/w/weather/warning/status.do")}>{item.t2.slice(4).trim()}</span>
                                 <span style={{ fontSize: "9px" }}>{item.t3.slice(item.t3.indexOf("년") + 1).trim()}</span>
                             </SwiperSlide>
                         )

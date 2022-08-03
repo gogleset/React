@@ -14,7 +14,7 @@ const HomeWeekBox = () => {
         <>
             {/* 주간 예보 */}
             <div className={styles.weather_title}>
-                <h1>주간 기온 및 날씨</h1>
+                <h1>주간 날씨</h1>
             </div>
 
             {weeklyLandData && weeklyTemperatureData && <div className={styles.weekly_weather_wrapper}>
