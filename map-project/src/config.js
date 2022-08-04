@@ -17,6 +17,7 @@ export default {
     sunriseUrl: "/B090041/openapi/service/RiseSetInfoService/getLCRiseSetInfo?",
     radarUrl: "/1360000/RadarImgInfoService/getCmpImg?",
     dustUrl: "/B552584/ArpltnInforInqireSvc",
+    liveWeatherUrl: "/1360000/LivingWthrIdxServiceV2", //생활지수
 
 
     liveSituation: "/getUltraSrtNcst?",
@@ -26,7 +27,8 @@ export default {
     weeklyTemperatureForecast: "/getMidTa?",
     sidoDustForecast: "/getCtprvnRltmMesureDnsty?",
     breakingNewsForecast: "/getWthrWrnMsg?",
-    fastNewsForecast: "/getWthrBrkNews?"
+    fastNewsForecast: "/getWthrBrkNews?",
+    uvForecast: "/getUVIdxV2?", //자외선
 }
 
 // http://apis.data.go.kr/1360000/WthrWrnInfoService/getWthrBrkNews?serviceKey=인증키&numOfRows=10&pageNo=1&stnId=108&fromTmFc=20170607&toTmFc=20170607

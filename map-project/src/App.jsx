@@ -14,6 +14,7 @@ import {
 } from "./data/Store/Slice/radarForecastSlice.js";
 import { changeDustForecastValue } from './data/Store/Slice/dustForecast.js';
 import { changeBreakForecastValue, changeFastForecastValue } from './data/Store/Slice/breakFastForecastSlice.js';
+import { changeUvForecastValue } from './data/Store/Slice/liveWeatherForecastSlice.js';
 import { changeVideoValue } from './data/Store/Slice/videoSlice.js';
 import { getCurrentLocation, dfs_xy_conv } from './helper/GeolocationHelper.js';
 import { getWeatherApi } from "./data/API/GetWeatherAPI";
@@ -91,7 +92,7 @@ function App() {
       const { nx, ny } = dfs_xy_conv("toXY", latitude, longitude);
       // 오늘 기상
       dispatchWeatherNxApiData(nx, ny, latitude, longitude);
-    } else if(err === -1){
+    } else if (err === -1) {
       dispatchWeatherNxApiData(60, 127, 37.565717, 126.977794);
     }
   }, [err]);
@@ -125,11 +126,18 @@ function App() {
       }).catch((rej) => {
         dispatch(changeBreakForecastValue({ data: null, status: 400, err: "NO" }));
       });
+      // 속보
       getWeatherApi.getFastForecast(local.region_1depth_name).then((res) => {
         // console.log(res);
         dispatch(changeFastForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
       }).catch((rej) => {
         dispatch(changeFastForecastValue({ data: null, status: 400, err: "NO" }));
+      });
+      //자외선지수
+      getWeatherApi.getLiveWeatherForecast(local.region_1depth_name, local.region_2depth_name, local.region_3depth_name).then((res) => {
+        dispatch(changeUvForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
+      }).catch((rej) => {
+        dispatch(changeUvForecastValue({ data: null, status: 400, err: "NO" }));
       });
     }
 

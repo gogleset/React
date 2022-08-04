@@ -1,4 +1,5 @@
 import { weeklyTemperatureCodeData } from "../asset/data/weeklyTemperatureCode.js";
+import { lifeWeatherCodeData } from "../asset/data/lifeWeatherCode.js";
 // 현재 위치를 담은 에러, 시간, 위도, 경도 객체를 리턴합니다.
 async function getCurrentLocation() {
     return new Promise((resolve, reject) => {
@@ -68,6 +69,36 @@ function getWeeklyTemperatureForecastCode(local) {
         }
     });
     return filters.code;
+}
+
+// 생활기상지수 조회서비스 지역별 코드번호를 리턴하는 함수
+function getLifeWeatherCode(depth1, depth2, depth3) {
+    if (depth1 === undefined || depth2 === undefined || depth3 === undefined) {
+        console.log("getLifeWeather::: no data");
+        return null;
+    }
+    const region_1depth_name = depth1.trim();
+    const region_2depth_name = depth2.trim();
+    const region_3depth_name = depth3.trim();
+    let arr = lifeWeatherCodeData.filter((item, index) => {
+        return item.depth3.trim() === region_3depth_name;
+    });
+
+    if (arr.length < 1) {
+        arr = lifeWeatherCodeData.filter((item, index) => {
+            return item.depth2.trim() === region_2depth_name;
+        });
+        // 검색결과가 하나 이상일때
+        if (arr.length > 0) {
+            arr = { ...arr[0] }
+        } else {
+            arr = lifeWeatherCodeData.filter((item, index) => {
+                return item.depth1.trim() === region_1depth_name;
+            })
+            arr = { ...arr[0] }
+        }
+    }
+    return arr;
 }
 
 // 기상특보속보 지점코드를 반환하는 함수
@@ -182,4 +213,4 @@ function dfs_xy_conv(code, v1, v2) {
 
 
 
-export { getCurrentLocation, getWeeklyLandCode, dfs_xy_conv, getWeeklyTemperatureForecastCode, getBreakFastForecastCode };
+export { getCurrentLocation, getWeeklyLandCode, dfs_xy_conv, getWeeklyTemperatureForecastCode, getBreakFastForecastCode, getLifeWeatherCode };

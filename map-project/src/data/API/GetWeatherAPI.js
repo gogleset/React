@@ -2,7 +2,7 @@ import axios from "axios";
 import config from "../../config.js";
 import DayHelper from "../../helper/DayHelper.js";
 import dayjs from "dayjs";
-import { getWeeklyLandCode, getWeeklyTemperatureForecastCode, getBreakFastForecastCode } from "../../helper/GeolocationHelper.js";
+import { getWeeklyLandCode, getWeeklyTemperatureForecastCode, getBreakFastForecastCode, getLifeWeatherCode } from "../../helper/GeolocationHelper.js";
 const Day = new DayHelper();
 const today = Day.getDay(); //현재 날짜
 const serverHour = Day.getServerHour(); //현재 시간
@@ -127,13 +127,20 @@ export const getWeatherApi = {
     },
     // http://apis.data.go.kr/1360000/WthrWrnInfoService/getWthrBrkNews?serviceKey=인증키&numOfRows=10&pageNo=1&stnId=108&fromTmFc=20170607&toTmFc=20170607
 
-    
 
-    // getNews: async () => {
-    //     try{
-    //         const data = await axios.get('/api' + `${config.breakingNewsUrls}${config.warningNews}`)
-    //     }catch{
-
-    //     }
-    // }
+    // 생활 자외선 지수 정보
+    getLiveWeatherForecast: async (depth1, depth2, depth3,) => {
+        let { code } = getLifeWeatherCode(depth1, depth2, depth3);
+        if (code === null) {
+            code = 1100000000;
+        }
+        try {
+            // http://apis.data.go.kr/1360000/LivingWthrIdxServiceV2/getUVIdxV2?serviceKey=인증키&areaNo=1100000000&time=2021070618
+            const data = await axios.get('/api' + `${config.liveWeatherUrl}${config.uvForecast}serviceKey=${config.keys.encodingKey}&dataType=JSON&areaNo=${code}&time=${hour < 8 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}06`)
+            console.log(data);
+            return { data: data };
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 }
