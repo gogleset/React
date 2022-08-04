@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 
 import styles from "../../styles/graph.module.scss";
 import DayHelper from "../../helper/DayHelper.js"
 
-const Day = new DayHelper();
+
 
 const options = {
     // responsive 속성을 false로 지정한다.

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import sunImage from "../../asset/images/icon_sun.gif";
 import cloudImage from "../../asset/images/icon_cloud.png";
 import manyCloudImage from "../../asset/images/icon_cloud_many.png";

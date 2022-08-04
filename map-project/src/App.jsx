@@ -7,6 +7,7 @@ import { changeLocationValue, changeLocalValue } from "./data/Store/Slice/geoLoc
 import { changeLiveForecastValue } from "./data/Store/Slice/liveForecastSlice.js"
 import { changeTodayForecastValue } from "./data/Store/Slice/todayForecastSlice";
 import { changeWeeklyLandForecastValue, changeWeeklyTemperatureForecastValue } from "./data/Store/Slice/weeklyForecastSlice";
+
 import { changeSunriseForecastValue } from "./data/Store/Slice/sunriseForecastSlice.js"
 import {
   changeradarForecastValue

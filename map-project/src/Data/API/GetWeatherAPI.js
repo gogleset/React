@@ -32,7 +32,7 @@ export const getWeatherApi = {
             forecastMinutes = "30";
         }
         try {
-            const data = await axios.get('/api' + `${config.weatherUrls}${config.liveForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=60&dataType=JSON&base_date=${(Number(hour)) === 24 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${(Number(hour)) === 24 ? "23" : serverHour}${forecastMinutes}&nx=${nx}&ny=${ny}`);
+            const data = await axios.get(`/api${config.weatherUrls}${config.liveForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=60&dataType=JSON&base_date=${(Number(hour)) === 24 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${(Number(hour)) === 24 ? "23" : serverHour}${forecastMinutes}&nx=${nx}&ny=${ny}`);
             // console.log("try");
             // console.log(data);
             return { data: data };
@@ -47,7 +47,7 @@ export const getWeatherApi = {
         //local은 지역명이 들어있어야한다.
         try {
             // console.log('/api' + `${config.weeklyLandUrl}${config.weeklyLandForecast}serviceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=10&dataType=JSON&regId=${weeklyLandCode}&tmFc=${Number(hour) < 8 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}0600`);
-            const data = await axios.get('/api' + `${config.weeklyLandUrl}${config.weeklyLandForecast}serviceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=10&dataType=JSON&regId=${weeklyLandCode}&tmFc=${Number(hour) < 8 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}0600`);
+            const data = await axios.get(`/api${config.weeklyLandUrl}${config.weeklyLandForecast}serviceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=10&dataType=JSON&regId=${weeklyLandCode}&tmFc=${Number(hour) < 8 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}0600`);
             return { data: data };
         } catch (err) {
             throw new Error(err);
@@ -62,7 +62,7 @@ export const getWeatherApi = {
         //local은 지역명이 들어있어야한다.
         try {
             // console.log('/api' + `${config.weeklyTemperatureUrl}${config.weeklyTemperatureForecast}serviceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=10&dataType=JSON&regId=${weeklyTemperatureCode}&tmFc=${Number(hour) < 8 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}0600`);
-            const data = await axios.get('/api' + `${config.weeklyTemperatureUrl}${config.weeklyTemperatureForecast}serviceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=10&dataType=JSON&regId=${weeklyTemperatureCode}&tmFc=${Number(hour) < 8 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}0600`);
+            const data = await axios.get(`/api${config.weeklyTemperatureUrl}${config.weeklyTemperatureForecast}serviceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=10&dataType=JSON&regId=${weeklyTemperatureCode}&tmFc=${Number(hour) < 8 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}0600`);
             // console.log(data);
             return { data: data };
         } catch (err) {
@@ -73,7 +73,7 @@ export const getWeatherApi = {
     getSunriseForecast: async (nx, ny) => {
         // console.log(`getSunriseForecast :::  ${nx} ,${ny}`)
         try {
-            const data = await axios.get('/api' + `${config.sunriseUrl}longitude=${ny}&latitude=${nx}&locdate=${today}&dnYn=y&ServiceKey=${config.keys.encodingKey}`);
+            const data = await axios.get(`/api${config.sunriseUrl}longitude=${ny}&latitude=${nx}&locdate=${today}&dnYn=y&ServiceKey=${config.keys.encodingKey}`);
             return { data: data };
         } catch (err) {
             throw new Error(err);
@@ -82,7 +82,7 @@ export const getWeatherApi = {
     // 레이더 정보
     getRadarForecast: async () => {
         try {
-            const data = await axios.get('/api' + `${config.radarUrl}serviceKey=${config.keys.encodingKey}&numOfRows=10&pageNo=1&dataType=JSON&data=CMP_WRC&time=${today}`);
+            const data = await axios.get(`/api${config.radarUrl}serviceKey=${config.keys.encodingKey}&numOfRows=10&pageNo=1&dataType=JSON&data=CMP_WRC&time=${today}`);
             return { data: data };
         } catch (err) {
             throw new Error(err);
@@ -109,7 +109,7 @@ export const getWeatherApi = {
     getBreakForecast: async (local) => {
         const brackCode = getBreakFastForecastCode(local)
         try {
-            const data = await axios.get('/api' + `${config.breakingNewsUrl}${config.breakingNewsForecast}serviceKey=${config.keys.encodingKey}&dataType=JSON&numOfRows=10&pageNo=1&fromTmFc=${dayjs(today).subtract(1, "day").format("YYYYMMDD")}&toTmFc=${today}&stnId=${brackCode}`)
+            const data = await axios.get(`/api${config.breakingNewsUrl}${config.breakingNewsForecast}serviceKey=${config.keys.encodingKey}&dataType=JSON&numOfRows=10&pageNo=1&fromTmFc=${dayjs(today).subtract(1, "day").format("YYYYMMDD")}&toTmFc=${today}&stnId=${brackCode}`)
             return { data: data };
         } catch (err) {
             throw new Error(err);
@@ -119,7 +119,7 @@ export const getWeatherApi = {
     getFastForecast: async (local) => {
         const fastCode = getBreakFastForecastCode(local)
         try {
-            const data = await axios.get('/api' + `${config.breakingNewsUrl}${config.fastNewsForecast}serviceKey=${config.keys.encodingKey}&dataType=JSON&numOfRows=10&pageNo=1&stnId=${fastCode}&fromTmFc=${today}&toTmFc=${today}`)
+            const data = await axios.get(`/api${config.breakingNewsUrl}${config.fastNewsForecast}serviceKey=${config.keys.encodingKey}&dataType=JSON&numOfRows=10&pageNo=1&stnId=${fastCode}&fromTmFc=${today}&toTmFc=${today}`)
             return { data: data };
         } catch (err) {
             throw new Error(err);
