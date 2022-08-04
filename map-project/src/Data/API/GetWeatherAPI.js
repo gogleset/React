@@ -1,8 +1,8 @@
 import axios from "axios";
 import config from "../../config.js";
-import DayHelper from "../../Helper/DayHelper.js";
+import DayHelper from "../../helper/DayHelper.js";
 import dayjs from "dayjs";
-import { getWeeklyLandCode, getWeeklyTemperatureForecastCode, getBreakFastForecastCode } from "../../Helper/GeolocationHelper.js";
+import { getWeeklyLandCode, getWeeklyTemperatureForecastCode, getBreakFastForecastCode } from "../../helper/GeolocationHelper.js";
 const Day = new DayHelper();
 const today = Day.getDay(); //현재 날짜
 const serverHour = Day.getServerHour(); //현재 시간

@@ -78,11 +78,11 @@ const HomeDayBox = () => {
                 <SwiperSlide>
                     {tomorrowPrecipitationForm && <div className={styles.weather_today_graph_wrapper}>
                         {/*  */}
-                        <div className={styles.weather_today_graph_article_wrapper}>
+                        <div className={styles.weather_tomorrow_graph_article_wrapper}>
                             {/* 하늘 상태로 반복 */}
                             {tomorrowPrecipitationForm.map((item, index) => {
                                 return (
-                                    <div className={styles.weather_today_graph_article_box} key={index}>
+                                    <div className={styles.weather_tomorrow_graph_article_box} key={index}>
                                         <span>{tomorrowTemperature[index]}&deg;</span>
                                         <WeatherImage data={{ precipitation: item, sky: tomorrowSky[index], time: tomorrowTime[index].slice(0, 2) }} width={25} height={25} />
                                     </div>
@@ -90,17 +90,17 @@ const HomeDayBox = () => {
                             })}
                         </div>
                         {/* 그래프 */}
-                        <TodayWeatherGraph data={{ temperature: tomorrowTemperature, time: tomorrowTime }} />
+                        <TodayWeatherGraph data={{ temperature: tomorrowTemperature, time: tomorrowTime }} long={true}/>
                     </div>}
                 </SwiperSlide>
                 <SwiperSlide>
                     {dayAfterTomorrowPrecipitationForm && <div className={styles.weather_today_graph_wrapper}>
                         {/*  */}
-                        <div className={styles.weather_today_graph_article_wrapper}>
+                        <div className={styles.weather_tomorrow_graph_article_wrapper}>
                             {/* 하늘 상태로 반복 */}
                             {dayAfterTomorrowPrecipitationForm.map((item, index) => {
                                 return (
-                                    <div className={styles.weather_today_graph_article_box} key={index}>
+                                    <div className={styles.weather_tomorrow_graph_article_box} key={index}>
                                         <span>{dayAfterTomorrowTemperature[index]}&deg;</span>
                                         <WeatherImage data={{ precipitation: item, sky: dayAfterTomorrowSky[index], time: dayAfterTomorrowTime[index].slice(0, 2) }} width={25} height={25} />
                                     </div>
@@ -108,7 +108,7 @@ const HomeDayBox = () => {
                             })}
                         </div>
                         {/* 그래프 */}
-                        <TodayWeatherGraph data={{ temperature: dayAfterTomorrowTemperature, time: dayAfterTomorrowTime }} />
+                        <TodayWeatherGraph data={{ temperature: dayAfterTomorrowTemperature, time: dayAfterTomorrowTime }} long={true}/>
                     </div>}
                 </SwiperSlide>
             </Swiper>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import DayHelper from "../../Helper/DayHelper.js";
+import DayHelper from "../../helper/DayHelper.js";
 
 import styles from "../../styles/home.module.scss";
 import WeatherImage from '../../components/Home/WeatherImage';

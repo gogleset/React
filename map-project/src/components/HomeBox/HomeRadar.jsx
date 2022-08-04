@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 import styles from "../../styles/home.module.scss";
-import DayHelper from "../../Helper/DayHelper.js";
+import DayHelper from "../../helper/DayHelper.js";
 
 const Day = new DayHelper();
 const hour = Day.get24Hour();

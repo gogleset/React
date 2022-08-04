@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import DayHelper from "../../Helper/DayHelper";
+import DayHelper from "../../helper/DayHelper";
 
 import styles from "../../styles/home.module.scss";
 import KakaoMap from '../../components/KakaoMap';

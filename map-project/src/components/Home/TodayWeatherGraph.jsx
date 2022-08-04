@@ -3,7 +3,7 @@ import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 
 import styles from "../../styles/graph.module.scss";
-import DayHelper from "../../Helper/DayHelper.js"
+import DayHelper from "../../helper/DayHelper.js"
 
 const Day = new DayHelper();
 
@@ -43,9 +43,9 @@ const options = {
 
 
 
-const TodayWeatherGraph = ({ data }) => {
+const TodayWeatherGraph = ({ data, long }) => {
     let { temperature, time } = data;
-   
+
     const printDataOption = {
         labels: time,
         datasets: [
@@ -61,7 +61,7 @@ const TodayWeatherGraph = ({ data }) => {
     };
 
     return (
-        <div className={styles.container}>
+        <div className={long ? styles.long_container : styles.container}>
             <Line type="line" data={printDataOption} options={options} />
         </div>
     );
@@ -69,6 +69,7 @@ const TodayWeatherGraph = ({ data }) => {
 
 TodayWeatherGraph.defaultProps = {
     data: null,
+    long: false,
 }
 
 export default TodayWeatherGraph;
