@@ -45,6 +45,7 @@ function App() {
     });
     // 초단기예보
     getWeatherApi.getLiveForecast(nx, ny).then((res) => {
+      console.log(res)
       dispatch(changeLiveForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
     }).catch((rej) => {
       dispatch(changeLiveForecastValue({ data: null, status: 400, err: "NO" }));

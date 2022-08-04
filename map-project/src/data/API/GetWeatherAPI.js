@@ -32,6 +32,7 @@ export const getWeatherApi = {
             forecastMinutes = "30";
         }
         try {
+            console.log(`/api${config.weatherUrls}${config.liveForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=60&dataType=JSON&base_date=${(Number(hour)) === 24 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${(Number(hour)) === 24 ? "23" : serverHour}${forecastMinutes}&nx=${nx}&ny=${ny}`);
             const data = await axios.get(`/api${config.weatherUrls}${config.liveForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=60&dataType=JSON&base_date=${(Number(hour)) === 24 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${(Number(hour)) === 24 ? "23" : serverHour}${forecastMinutes}&nx=${nx}&ny=${ny}`);
             // console.log("try");
             // console.log(data);
