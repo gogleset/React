@@ -28,6 +28,7 @@ import "./styles/home.module.scss";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
+
 function App() {
   // store states
   const { err, latitude, longitude, local } = useSelector((state) => state.geoLocation);

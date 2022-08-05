@@ -89,26 +89,33 @@ const todayForecastSlice = createSlice({
 
                 // 지금 ~ 19시간 후 까지
                 // temperature 객체 복사
-                let temperatureArr = [...state.todayTemperature];
-                // time 객체 복사
-                let timeArr = [...state.todayTime];
-                let precipitationFormArr = [...state.todayPrecipitationForm];
-                let skyArr = [...state.todaySky]
-                for (let i = 0; i < state.todayTemperature.length; i++) {
-                    // 오늘날짜 나오지 않는다면 짜름
-                    if (state.todayTemperature[i].fcstTime.indexOf(now) === 0 && state.todayTemperature[i].fcstDate === today) {
-                        break;
+                if (state.todayTemperature) {
+                    let temperatureArr = [...state.todayTemperature];
+                    // time 객체 복사
+                    let timeArr = [...state.todayTime];
+                    let precipitationFormArr = [...state.todayPrecipitationForm];
+                    let skyArr = [...state.todaySky];
+                    // console.log(temperatureArr, timeArr, precipitationFormArr, skyArr)
+                    for (let i = 0; i < state.todayTemperature.length; i++) {
+                        // 오늘날짜 나오지 않는다면 짜름
+                        // console.log(i);
+                        // console.log(now);
+                        // console.log(state.todayTemperature[i].fcstTime.indexOf(now))
+                        if (state.todayTemperature[i].fcstTime.indexOf(now) > -1 && state.todayTemperature[i].fcstDate === today) {
+                            break;
+                        }
+                        temperatureArr.shift()
+                        timeArr.shift()
+                        precipitationFormArr.shift()
+                        skyArr.shift()
                     }
-                    temperatureArr.shift()
-                    timeArr.shift()
-                    precipitationFormArr.shift()
-                    skyArr.shift()
+                    // console.log(temperatureArr, timeArr, precipitationFormArr, skyArr)
+                    // 19시간까지 데이터로 짜름
+                    state.nowTemperature = temperatureArr.slice(1, 21).map((item => item.fcstValue));
+                    state.nowTime = timeArr.slice(1, 21)
+                    state.nowPrecipitationForm = precipitationFormArr.slice(1, 21).map((item => item.fcstValue));
+                    state.nowSky = skyArr.slice(1, 21).map((item => item.fcstValue));
                 }
-                // 19시간까지 데이터로 짜름
-                state.nowTemperature = temperatureArr.slice(0, 20).map((item => item.fcstValue));
-                state.nowTime = timeArr.slice(0, 20)
-                state.nowPrecipitationForm = precipitationFormArr.slice(0, 20).map((item => item.fcstValue));
-                state.nowSky = skyArr.slice(0, 20).map((item => item.fcstValue));
             }
         },
     }
