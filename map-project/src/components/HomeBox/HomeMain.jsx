@@ -19,7 +19,7 @@ const HomeMain = () => {
     // 오늘 단기데이터, 내일, 내일 모레 api데이터
     const { highTemperatures, rowTemperatures, nowTemperature } = useSelector((state) => state.todayForecast);
     const { local } = useSelector((state) => state.geoLocation);
-    React.useEffect(() => { if (nowTemperature) { console.log(temperature, nowTemperature[0]) } }, [temperature, nowTemperature]);
+    const { uvData } = useSelector((state) => state.liveWeather)
     return (
         <div className={styles.map_wrapper}>
             <div className={styles.current_position}>
@@ -46,12 +46,20 @@ const HomeMain = () => {
 
 
                 {/* 현재 습도 */}
-                {temperature && <span className={styles.current_position_humidity}>
-                    습도:  {humidity[0].fcstValue}%
-                </span>}
+                <div style={{ margin: "5px 0px" }}>
+                    {temperature && <span className={styles.current_position_humidity}>
+                        습도:  {humidity[0].fcstValue}%
+                    </span>}
+                    {uvData && <span style={{ fontSize: "14px", marginLeft: "10px" }}>
+                        자외선:
+                        {parseInt(uvData[0].tomorrow) > 10 ? "위험" : parseInt(uvData[0].tomorrow) > 7 ? "매우 높음" : parseInt(uvData[0].tomorrow) > 5 ? "높음" : parseInt(uvData[0].tomorrow) > 2 ? "보통" : "낮음"}
+                    </span>}
+                </div>
+
                 <span className={styles.current_position_time}>
                     {yoil},{hour}:{min}
                 </span>
+
             </div>
             {/* 카카오맵 */}
             <KakaoMap />

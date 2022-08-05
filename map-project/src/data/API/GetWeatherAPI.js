@@ -137,7 +137,7 @@ export const getWeatherApi = {
         }
         try {
             // http://apis.data.go.kr/1360000/LivingWthrIdxServiceV2/getUVIdxV2?serviceKey=인증키&areaNo=1100000000&time=2021070618
-            const data = await axios.get('/api' + `${config.liveWeatherUrl}${config.uvForecast}serviceKey=${config.keys.encodingKey}&dataType=JSON&areaNo=${code}&time=${hour < 8 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}06`)
+            const data = await axios.get('/api' + `${config.liveWeatherUrl}${config.uvForecast}serviceKey=${config.keys.encodingKey}&dataType=JSON&areaNo=${code}&time=${dayjs(today).subtract(1, "day").format("YYYYMMDD")}06`)
             console.log(data);
             return { data: data };
         } catch (err) {
