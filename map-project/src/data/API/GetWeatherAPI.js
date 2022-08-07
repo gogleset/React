@@ -16,7 +16,7 @@ export const getWeatherApi = {
         const time = Day.getTodayForecastTime();
         // console.log('/api' + `${config.weatherUrls}${config.todayForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=865&dataType=JSON&base_date=${Number(hour) < 3 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${Number(hour) < 3 ? "2300" : "0200"}&nx=${nx}&ny=${ny}`)
         try {
-            const data = await axios.get('/api' + `${config.weatherUrls}${config.todayForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=865&dataType=JSON&base_date=${Number(hour) < 3 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${time}&nx=${nx}&ny=${ny}`);
+            const data = await axios.get('/api' + `${config.weatherUrls}${config.todayForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=865&dataType=JSON&base_date=${Number(hour) < 4 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${time}&nx=${nx}&ny=${ny}`);
             // console.log(data);
             return { data: data };
         } catch (err) {
@@ -32,7 +32,7 @@ export const getWeatherApi = {
             forecastMinutes = "30";
         }
         try {
-            console.log(`/api${config.weatherUrls}${config.liveForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=60&dataType=JSON&base_date=${(Number(hour)) === 24 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${(Number(hour)) === 24 ? "23" : serverHour}${forecastMinutes}&nx=${nx}&ny=${ny}`);
+            // console.log(`/api${config.weatherUrls}${config.liveForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=60&dataType=JSON&base_date=${(Number(hour)) === 24 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${(Number(hour)) === 24 ? "23" : serverHour}${forecastMinutes}&nx=${nx}&ny=${ny}`);
             const data = await axios.get(`/api${config.weatherUrls}${config.liveForecast}ServiceKey=${config.keys.encodingKey}&pageNo=1&numOfRows=60&dataType=JSON&base_date=${(Number(hour)) === 24 ? dayjs(today).subtract(1, "day").format("YYYYMMDD") : today}&base_time=${(Number(hour)) === 24 ? "23" : serverHour}${forecastMinutes}&nx=${nx}&ny=${ny}`);
             // console.log("try");
             // console.log(data);
@@ -138,7 +138,7 @@ export const getWeatherApi = {
         try {
             // http://apis.data.go.kr/1360000/LivingWthrIdxServiceV2/getUVIdxV2?serviceKey=인증키&areaNo=1100000000&time=2021070618
             const data = await axios.get('/api' + `${config.liveWeatherUrl}${config.uvForecast}serviceKey=${config.keys.encodingKey}&dataType=JSON&areaNo=${code}&time=${dayjs(today).subtract(1, "day").format("YYYYMMDD")}06`)
-            console.log(data);
+            // console.log(data);
             return { data: data };
         } catch (err) {
             throw new Error(err);

@@ -91,6 +91,7 @@ const todayForecastSlice = createSlice({
                 // temperature 객체 복사
                 if (state.todayTemperature) {
                     let temperatureArr = [...state.todayTemperature];
+                    // console.log(temperatureArr);
                     // time 객체 복사
                     let timeArr = [...state.todayTime];
                     let precipitationFormArr = [...state.todayPrecipitationForm];
@@ -98,9 +99,11 @@ const todayForecastSlice = createSlice({
                     // console.log(temperatureArr, timeArr, precipitationFormArr, skyArr)
                     for (let i = 0; i < state.todayTemperature.length; i++) {
                         // 오늘날짜 나오지 않는다면 짜름
-                        // console.log(i);
+                        // console.log(state.todayTemperature[i])
                         // console.log(now);
+                        // console.log(state.todayTemperature[i].fcstTime)
                         // console.log(state.todayTemperature[i].fcstTime.indexOf(now))
+                        // console.log(state.todayTemperature[i].fcstDate === today)
                         if (state.todayTemperature[i].fcstTime.indexOf(now) > -1 && state.todayTemperature[i].fcstDate === today) {
                             break;
                         }
@@ -109,6 +112,7 @@ const todayForecastSlice = createSlice({
                         precipitationFormArr.shift()
                         skyArr.shift()
                     }
+
                     // console.log(temperatureArr, timeArr, precipitationFormArr, skyArr)
                     // 19시간까지 데이터로 짜름
                     state.nowTemperature = temperatureArr.slice(1, 21).map((item => item.fcstValue));

@@ -89,14 +89,13 @@ export default class date {
         }
         const time = parseInt(`${hour}${minute}`)
         // console.log(time);
-        return (time > 2330) ? "2300" :
-            (time > 2030) ? "2000" :
-                (time > 1730) ? "1700" :
-                    (time > 1430) ? "1400" :
-                        (time > 1130) ? "1100" :
-                            (time > 830) ? "0800" :
-                                (time > 530) ? "0500" :
-                                    (time > 230) ? "0200" : "2300"
+        return (time > 2130) ? "2000" :
+            (time > 1830) ? "1700" :
+                (time > 1530) ? "1400" :
+                    (time > 1230) ? "1100" :
+                        (time > 930) ? "0800" :
+                            (time > 630) ? "0500" :
+                                (time > 330) ? "0200" : "2300"
     };
     // 밤 낮 구분
     getEvent(hour) {

@@ -18,6 +18,7 @@ export const getKaKaoApi = {
 
     getAddress: async (latitude, longitude) => {
         // console.log(latitude, longitude);
+        // 36.464511 127.280889 
         try {
             const result = await axios.get(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${longitude}&y=${latitude}&input_coord=WGS84`, {
                 headers: { 'Authorization': `KakaoAK ${config.keys.kakaoRestKey}` }
