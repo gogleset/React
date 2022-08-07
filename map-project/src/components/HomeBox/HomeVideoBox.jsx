@@ -30,7 +30,7 @@ const HomeVideoBox = () => {
                         <SwiperSlide key={index} style={{ fontSize: '12px', display: 'flex', margin: "5px 0px", alignItems: 'center' }} onClick={() => window.open(`${item.url}`)}>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <img src={item.thumbnail} alt={item.autor} style={{ borderRadius: "10px" }} />
-                                <span className={styles.video_text} style={{ textAlign: 'center', margin: "10px 0px", fontSize: "11px" }}>{item.title}</span>
+                                <span className={styles.video_text} style={{ textAlign: 'center', marginTop: "10px",  }}>{item.title}</span>
                             </div>
                         </SwiperSlide>
                     )
