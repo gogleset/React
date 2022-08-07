@@ -130,9 +130,9 @@ export const getWeatherApi = {
 
 
     // 생활 자외선 지수 정보
-    getLiveWeatherForecast: async (depth1, depth2, depth3,) => {
-        let { code } = getLifeWeatherCode(depth1, depth2, depth3);
-        if (code === null) {
+    getLiveWeatherForecast: async (addres) => {
+        let { code } = getLifeWeatherCode(addres);
+        if (code === null || code === undefined) {
             code = 1100000000;
         }
         try {

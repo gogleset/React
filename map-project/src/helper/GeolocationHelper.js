@@ -72,33 +72,37 @@ function getWeeklyTemperatureForecastCode(local) {
 }
 
 // 생활기상지수 조회서비스 지역별 코드번호를 리턴하는 함수
-function getLifeWeatherCode(depth1, depth2, depth3) {
-    if (depth1 === undefined || depth2 === undefined || depth3 === undefined) {
+function getLifeWeatherCode(address) {
+    if (address === undefined) {
         console.log("getLifeWeather::: no data");
         return null;
     }
-    const region_1depth_name = depth1.trim();
-    const region_2depth_name = depth2.trim();
-    const region_3depth_name = depth3.trim();
-    let arr = lifeWeatherCodeData.filter((item, index) => {
-        return item.depth3.trim() === region_3depth_name;
-    });
-
-    if (arr.length < 1) {
-        arr = lifeWeatherCodeData.filter((item, index) => {
-            return item.depth2.trim() === region_2depth_name;
-        });
-        // 검색결과가 하나 이상일때
-        if (arr.length > 0) {
-            arr = { ...arr[0] }
-        } else {
-            arr = lifeWeatherCodeData.filter((item, index) => {
-                return item.depth1.trim() === region_1depth_name;
-            })
-            arr = { ...arr[0] }
+    let result = [];
+    const arr = address.split(" ");
+    console.log(arr);
+    if (arr.length > 0) {
+        console.log(arr[2].indexOf("구") > -1);
+        if (arr[2].indexOf("구") > -1) {
+            result = lifeWeatherCodeData.filter((item, index) => {
+                return item.depth2.trim() === arr[2];
+            });
+        }
+        console.log(result.length < 1);
+        if (result.length < 1) {
+            result = lifeWeatherCodeData.filter((item, index) => {
+                return item.depth2.trim() === arr[1];
+            });
+        }
+        console.log(result.length < 1);
+        if (result.length < 1) {
+            result = lifeWeatherCodeData.filter((item, index) => {
+                return item.depth1.trim() === arr[0];
+            });
         }
     }
-    return arr;
+    console.log(result[0])
+    return result[0]
+    // return result;
 }
 
 // 기상특보속보 지점코드를 반환하는 함수

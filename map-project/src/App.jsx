@@ -136,7 +136,7 @@ function App() {
         dispatch(changeFastForecastValue({ data: null, status: 400, err: "NO" }));
       });
       //자외선지수
-      getWeatherApi.getLiveWeatherForecast(local.region_1depth_name, local.region_2depth_name, local.region_3depth_name).then((res) => {
+      getWeatherApi.getLiveWeatherForecast(local.address_name).then((res) => {
         dispatch(changeUvForecastValue({ data: res.data.data.response.body.items.item, status: res.data.status, err: res.data.statusText }));
       }).catch((rej) => {
         dispatch(changeUvForecastValue({ data: null, status: 400, err: "NO" }));
