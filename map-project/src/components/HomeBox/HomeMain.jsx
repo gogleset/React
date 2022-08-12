@@ -51,8 +51,7 @@ const HomeMain = () => {
                         습도:  {humidity[0].fcstValue}%
                     </span>}
                     {uvData && <span style={{ fontSize: "14px" }}>
-                        자외선:
-                        {parseInt(uvData[0].tomorrow) > 10 ? "위험" : parseInt(uvData[0].tomorrow) > 7 ? "매우 높음" : parseInt(uvData[0].tomorrow) > 5 ? "높음" : parseInt(uvData[0].tomorrow) > 2 ? "보통" : "낮음"}
+                        자외선: {parseInt(uvData[0].tomorrow) > 10 ? "위험" : parseInt(uvData[0].tomorrow) > 7 ? "매우 높음" : parseInt(uvData[0].tomorrow) > 5 ? "높음" : parseInt(uvData[0].tomorrow) > 2 ? "보통" : "낮음"}
                     </span>}
                 </div>
 
