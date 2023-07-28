@@ -1,5 +1,8 @@
+/**
+ * @gogleset heading component
+ */
 import React from "react";
-import useCardContext from "../hooks/useCardContext";
+import useCardContext from "./hooks/useCardContext";
 
 const Heading = ({ children }: { children: React.ReactNode }) => {
   const { toggle }: any = useCardContext();

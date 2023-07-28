@@ -2,7 +2,7 @@
  * @gogleset card component안에 접근하는지 검사
  */
 import { useContext } from "react";
-import { CardContext } from "../compoundComponents/Card";
+import { CardContext } from "../Card";
 
 const useCardContext = () => {
   const context = useContext(CardContext);
