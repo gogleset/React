@@ -1,0 +1,11 @@
+.components {
+  background-color: rgb(27, 152, 152);
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.components span {
+  margin: 3px;
+  font-size: large;
+}
