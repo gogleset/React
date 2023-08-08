@@ -5,13 +5,15 @@ import {
   writeOnlyThreeCounterAtom,
   readOnlyDoubleCounterAtom,
 } from "../atoms/counterAtoms";
+import { mountAtom } from "../atoms/onMountAtoms";
 
 const Counter = () => {
   const [count, setCount] = useAtom(counterAtom); // initial state로 받은 값을 useAtom에 넣어주면 현재 value와 setValue가 출력된다.
   const [decrementCount, decrement] = useAtom(decrementCountAtom); //get, set으로 설정한 값이 들어간다.
   const [, setThree] = useAtom(writeOnlyThreeCounterAtom); //writeonly
   const [doubledCount] = useAtom(readOnlyDoubleCounterAtom); //readonly
-  // console.log(setasd);
+  const [mount] = useAtom(mountAtom);
+
   return (
     <div>
       <h2 style={{ color: "violet" }}>Counter.tsx</h2>
@@ -27,6 +29,8 @@ const Counter = () => {
       <div>
         <button onClick={setThree}>Set Three!</button>
       </div>
+      <h4>Mount!</h4>
+      <h2>{`mount Atom ${mount}`}</h2>
 
       <h4 style={{ color: "orange" }}>basic get, set, useAtom example</h4>
     </div>
