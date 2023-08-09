@@ -12,7 +12,8 @@ const User = z.object({
 type UserType = z.infer<typeof User>;
 
 function processUser(user: UserType) {
-  return User.parse(user); // 유효성 검증
+  // return User.parse(user); // 유효성 검증
+  return User.safeParse(user);
 }
 
 export { User, type UserType, processUser };
