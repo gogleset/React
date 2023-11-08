@@ -1,5 +1,0 @@
-function sensingDom() {
-
-}
-
-export { sensingDom };

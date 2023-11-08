@@ -1,40 +1,42 @@
 import "./App.css";
 import { useEffect, useRef, useState } from "react";
-
+import { getIdPosts } from "./api/post";
 function App() {
   const ref = useRef<HTMLDivElement>(null);
 
-  const [viewingCount, setViewingCount] = useState(5);
-  const [viewingCountTotal, setViewingCountTotal] = useState(
-    new Array(viewingCount).fill(0)
-  );
+  const [id, setId] = useState(1);
 
   useEffect(() => {
-    //로딩되었을 때만 실행
+    if (!ref.current) {
+      return;
+    }
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          setViewingCount((prev) => prev + 5);
-          observer.unobserve(entries[0].target);
+          if (ref.current) {
+            setId((prev) => prev + 5);
+            // observer.unobserve(entries[0].target);
+          }
         }
       },
       { threshold: 1 }
     );
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    observer.observe(ref.current);
+
+    return () => {
+      observer.disconnect();
+    };
   }, []);
-  console.log(viewingCount);
+
   return (
     <main>
       <h1>intersactionObserver</h1>
-      {viewingCountTotal.map((_, index) => {
-        if (viewingCountTotal.length) {
-          return <div className="box" key={index} ref={ref}></div>;
-        } else {
-          return <div className="box" key={index}></div>;
-        }
+      {new Array(id).fill(0).map(() => {
+        return <div className="box"></div>;
       })}
+      <div className="more-btn" ref={ref}>
+        more-btn
+      </div>
     </main>
   );
 }
