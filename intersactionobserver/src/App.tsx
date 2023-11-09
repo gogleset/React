@@ -1,37 +1,45 @@
 import "./App.css";
 import { useEffect, useRef, useState } from "react";
 import { aos } from "./util/observer";
+import { scrollEvent } from "./util/scroll";
 // import { getviewCountPosts } from "./api/post";
-import useObserver from "./hooks/useObserver";
+import useIsInViewport from "./hooks/useIsInViewport";
+
 function App() {
   const ref = useRef<HTMLDivElement>(null);
-  // 많은 박스 object들
-  const { isDomInViewport: isMoreDivInViewPort } = useObserver(ref);
+  const { isDomFullInViewport, isDomInViewport, intersectionRatio } =
+    useIsInViewport(ref);
   const [viewCount, setViewCount] = useState(1);
   const [prevViewCount, setPrevViewCount] = useState(0);
   useEffect(() => {
-    if (isMoreDivInViewPort) {
+    if (isDomFullInViewport) {
       setPrevViewCount(viewCount);
       setViewCount(viewCount + 5);
     }
-  }, [isMoreDivInViewPort]);
+  }, [isDomFullInViewport]);
+  useEffect(() => {
+    if (isDomInViewport) {
+      scrollEvent(intersectionRatio);
+    }
+  }, [intersectionRatio, isDomInViewport]);
 
   aos(".box");
+
   return (
-    <main>
-      <h1>intersactionObserver</h1>
-      {new Array(viewCount).fill(0).map((_, index) => {
-        console.log(prevViewCount, index);
-        if (prevViewCount >= index) {
-          console.log("전");
-          return <div className="box visible" key={index}></div>;
-        }
-        return <div className="box" key={index}></div>;
-      })}
+    <>
+      <main>
+        <h1>intersactionObserver</h1>
+        {new Array(viewCount).fill(0).map((_, index) => {
+          if (prevViewCount >= index) {
+            return <div className="box visible" key={index}></div>;
+          }
+          return <div className="box" key={index}></div>;
+        })}
+      </main>
       <div className="more-btn" ref={ref}>
         more-btn
       </div>
-    </main>
+    </>
   );
 }
 

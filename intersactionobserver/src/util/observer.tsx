@@ -1,6 +1,5 @@
 export function aos(className: string) {
   const $cards = document.querySelectorAll(className);
-  console.log(className);
   const observer = new IntersectionObserver((entries) => {
     // 감지한 모든 .card 요소의 정보를 entries 배열로 전달받습니다.
     // entries 배열을 순회해, isIntersecting 조건이 참일 경우 "visible" 이라는 클래스명을 추가합니다.
