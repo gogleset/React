@@ -1,8 +1,13 @@
 .box {
-  width: 500px;
-  height: 500px;
+  width: 100%;
+  height: 200px;
   border: 1px solid;
   margin-bottom: 30px;
+  transform: translateX(200px);
+  transition: all 0.5s ease-in-out;
+}
+.visible {
+  transform: translateX(0px);
 }
 .more-btn {
   width: 500px;
