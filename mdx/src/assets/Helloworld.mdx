@@ -1,0 +1,230 @@
+# Class란?
+
+- ES6에 추가된 문법으로써 객체의 상태와 기능을 정의한 틀이며, 생성될 객체에 대한 일종의 청사진이다.
+- JS에선 실제 클래스 패턴에 대한 모방일 뿐 생성자 함수 패턴을 좀 더 클래스답게 보이기위한 장치일 뿐이다.
+- JS에선 상속보단 위임에 가깝게 동작한다.
+
+---
+
+# Prototype과 Class의 차이
+
+###### Prototype
+
+```js
+const User = function (name, age) {
+  this.name = name;
+  this.age = age;
+  this.showName = function () {
+    console.log(this.name);
+  };
+};
+
+const mike = new User("Mike", 30);
+console.log(mike); //User { name: 'Mike', age: 30, showName: [Function (anonymous)] }
+```
+
+###### Class
+
+```js
+class User2 {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  } //생성자 함수
+
+  showName() {
+    console.log(this.name);
+  }
+}
+
+const tom = new User2("Tom", 19);
+console.log(tom); //User2 { name: 'Tom', age: 19 }
+```
+
+- Class는 constructor라는 생성자 함수를 갖는다. 생성자 함수에서 초기화 된 값들은 객체의 프로퍼티가 된다. new를 통해 호출하면 자동 할당된다.
+- **Class 내부 메서드는 **proto**에 저장되고, 객체 내부 메서드는 객체에 저장되는것이 차이점이다.**
+
+---
+
+## 단순히 문법의 편의성 때문에 Class가 추가된 걸까?
+
+###### Prototype
+
+```jsx
+const User = function (name, age) {
+  this.name = name;
+  this.age = age;
+  this.showName = function () {
+    console.log(this.name);
+  };
+};
+
+const mike = User("Mike", 30);
+console.log(mike); //undefined
+```
+
+- new라는 키워드를 빼고 실행한다면 원래는 개발자가 실수한 코드이지만, 문제가 없이 undefined가 실행된다. 에러라고 즉시 알아차릴 수 없다.
+
+###### Class
+
+```jsx
+class User2 {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  showName() {
+    console.log(this.name);
+  }
+}
+
+const tom = User2("Tom", 19); //Type Error
+console.log(tom);
+```
+
+- Class를 사용시 new 키워드가 없다면 Error를 발생시킨다.
+
+---
+
+### 프로퍼티 값들은 어떻게 보여줄까?
+
+###### prototype
+
+```jsx
+for (key in mike) {
+  console.log(key);
+  /**
+     * name
+    age
+    showName
+     */
+}
+```
+
+- 메서드까지 전부 포함해서 나온다.
+
+###### Class
+
+```jsx
+for (key in tom) {
+  console.log(key);
+  /**
+       * name
+      age
+       */
+}
+```
+
+- 메서드는 포함하지 않는다.
+
+## Class의 상속
+
+```jsx
+class Car {
+  constructor(color) {
+    this.color = color;
+    this.wheel = 4;
+  }
+
+  drive() {
+    console.log("Drive");
+  }
+  stop() {
+    console.log("Stop");
+  }
+}
+
+class Bmw extends Car {
+  parking() {
+    console.log("parking");
+  }
+}
+
+const m1 = new Bmw("Black");
+
+console.log(m1.parking()); //parking
+console.log(m1.drive()); //drive
+```
+
+- Class 내장메서드는 **proto**에 저장되고, 이 메서드는 Prototype Chain과 같이 동작한다.
+
+### 메서드 오버라이딩(Method Overriding)
+
+```jsx
+class Bmw extends Car {
+  parking() {
+    console.log("parking");
+  }
+  stop() {
+    console.log("Bmw stop");
+  }
+}
+
+const m1 = new Bmw("Black");
+
+console.log(m1.stop()); //Bmw stop
+```
+
+- Car Class엔 stop()이란 메서드가 있다. 하지만 같은 이름으로 재정의한다면 메서드 덮어쓰기, 우선시 된다.
+
+### 부모 생성자 확장하기(super)
+
+- 만약 프로퍼티를 추가해야한다면?
+
+```jsx
+class Bmw extends Car {
+  // constructor(...args) {
+  //   super(...args);
+  // }
+  // 생략된 코드, 생성자 함수가 없다면 동작할 코드
+
+  constructor(color) {
+    super(color);
+    this.navigator = 1;
+  }
+  parking() {
+    console.log("parking");
+  }
+  stop() {
+    console.log("Bmw stop");
+  }
+}
+
+const m1 = new Bmw("Black");
+
+console.log(m1);
+```
+
+- 만약 생성자 함수가 없다면, 부모의 생성자 함수를 그대로 가져와 인수를 넣어줘도 동작한다.
+- 하지만 프로퍼티를 추가해야한다면, 부모의 생성자 함수를 불러주고(super) 프로퍼티를 추가해야한다.
+
+### 부모 메서드 확장하기(super)
+
+```js
+import slugger from "github-slugger";
+import Link from "next/link";
+
+interface Props {
+  text: string;
+}
+
+const Tag = ({ text }: Props) => {
+  return (
+    <Link href={`/tags/${slugger.slug(text)}`}>
+      <a className="mr-3 text-sm font-medium text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
+        {text.split(" ").join("-")}
+      </a>
+    </Link>
+  );
+};
+
+export default Tag;
+```
+
+- super 키워드를 활용하여 부모의 메서드에 접근 가능하다.
+- super 키워드를 활용해 확장가능하다.
+
+```html
+<span>123</span>
+```
